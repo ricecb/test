@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAP5 Biology - Revision Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']] // Define inline math delimiters
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <style>
+        /* --- Basic Reset & Body Styling --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; scroll-behavior: smooth; } /* Add smooth scroll */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F0F0F;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            width: 100%;
+            max-width: 900px; /* Wider for tables */
+            margin-bottom: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-grow: 1;
+            padding-top: 20px;
+        }
+
+        /* --- Content Container Styling --- */
+        .container {
+            background-color: #1C1C1C;
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: 100%;
+            border: 1px solid #333;
+            position: relative;
+        }
+
+        /* --- View Management (for this page only) --- */
+        #biology-main-page,
+        .biology-topic-content,
+        #biology-total-quiz-page {
+            display: none; /* Hide all specific biology views initially */
+        }
+
+        /* --- Headings --- */
+        h1 { color: #ffffff; margin-bottom: 15px; font-size: 2.1em; font-weight: 700; }
+        h2 { color: #eee; margin-top: 10px; margin-bottom: 20px; font-size: 1.7em; font-weight: 600; text-align: left; border-bottom: 2px solid #A40000; padding-bottom: 5px;}
+        /* Collapsible Section Heading */
+        h3.collapsible-header {
+            color: #ffffff; margin-top: 25px; margin-bottom: 10px; font-size: 1.3em;
+            border-bottom: 1px solid #444; padding-bottom: 8px; text-align: left;
+            cursor: pointer; position: relative; padding-right: 25px;
+            user-select: none;
+        }
+        h3.collapsible-header::after {
+            content: '\25BC'; position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
+            font-size: 0.8em; transition: transform 0.2s ease-in-out;
+        }
+        h3.collapsible-header.collapsed::after { transform: translateY(-50%) rotate(-90deg); }
+        /* Sub-headings within notes */
+        .revision-notes h4 { color: #e0e0e0; font-size: 1.15em; margin-top: 15px; margin-bottom: 8px; text-align: left; font-weight: 600;}
+
+        /* --- Paragraphs & Lists --- */
+        p.instructions { color: #e0e0e0; margin-bottom: 30px; font-size: 1.1em; line-height: 1.6; text-align: center; }
+        .biology-topic-content p { margin-bottom: 15px; font-size: 1em; text-align: left; line-height: 1.6;}
+        .biology-topic-content ul, .biology-topic-content ol { margin-bottom: 15px; margin-left: 25px; text-align: left;}
+        .biology-topic-content li { margin-bottom: 8px; line-height: 1.5; }
+        .biology-topic-content a { color: #60a5fa; text-decoration: none; }
+        .biology-topic-content a:hover { text-decoration: underline; }
+        /* Style for notes to be copy-friendly */
+        .revision-notes ul { padding-left: 20px; list-style-type: disc; } /* Ensure bullets visible */
+        .revision-notes ol { padding-left: 25px; list-style-type: decimal; } /* Ensure numbers visible */
+        .revision-notes li { margin-bottom: 10px; }
+        .revision-notes strong { color: #a5d6ff; font-weight: 600; } /* Highlight keywords */
+
+        /* --- Table Styling --- */
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+            text-align: left;
+            color: #ccc; /* Lighter text for tables */
+            background-color: #252525; /* Slightly lighter dark background for table */
+        }
+        .content-table th, .content-table td {
+            border: 1px solid #555; /* Slightly lighter border */
+            padding: 10px 12px; /* Increased padding */
+            vertical-align: top; /* Align text top */
+        }
+        .content-table thead th {
+            background-color: #383838; /* Darker header */
+            color: #ffffff;
+            font-weight: 600;
+            position: sticky; /* Make header sticky if table scrolls */
+            top: 0;
+        }
+        .content-table tbody tr:nth-child(even) {
+            background-color: #2f2f2f; /* Subtle striping */
+        }
+        .content-table tbody tr:hover {
+            background-color: #404040; /* Hover effect */
+        }
+
+        /* --- Menu Styling --- */
+        .biology-topic-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px; list-style: none; padding: 0; margin-top: 20px;
+        }
+        .biology-topic-grid li { margin-bottom: 0; }
+        .biology-topic-grid .button { height: 100%; display: flex; align-items: center; justify-content: center; padding: 16px 10px;} /* Center text vertically, adjust padding */
+
+        /* --- Button Styling --- */
+        .button {
+            display: block; background-color: #8B0000; color: #ffffff; padding: 14px 20px;
+            text-decoration: none; border-radius: 10px; font-size: 1.05em;
+            font-weight: 600; transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+            border: 1px solid transparent; cursor: pointer; width: 100%; text-align: center;
+        }
+        .button:hover { background-color: #A40000; transform: translateY(-3px); box-shadow: 0 6px 12px rgba(164, 0, 0, 0.4); }
+        .button:active { transform: translateY(-1px); background-color: #650000; box-shadow: 0 3px 6px rgba(164, 0, 0, 0.3); }
+
+        /* Back Button */
+        .back-button { background-color: #444; margin-top: 30px; }
+        .back-button:hover { background-color: #555; box-shadow: 0 4px 8px rgba(85, 85, 85, 0.3); }
+        .back-button:active { background-color: #333; box-shadow: 0 2px 4px rgba(85, 85, 85, 0.2); }
+
+        /* Start Quiz / Topic Quiz Buttons */
+        .start-quiz-button { background-color: #3b82f6; margin-top: 15px; }
+        .start-quiz-button:hover { background-color: #2563eb; box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3); }
+        .start-quiz-button:active { background-color: #1d4ed8; box-shadow: 0 3px 6px rgba(59, 130, 246, 0.2); }
+        .topic-quiz-header { /* Header for the quiz section */
+             color: #ffffff; margin-top: 25px; margin-bottom: 10px; font-size: 1.3em;
+             border-bottom: 1px solid #444; padding-bottom: 8px; text-align: left;
+        }
+
+        /* PDF Button */
+        .pdf-button {
+            position: absolute; top: 15px; right: 15px; background-color: #555; color: #ddd; padding: 5px 10px;
+            font-size: 0.8em; border-radius: 5px; text-decoration: none; cursor: pointer; border: 1px solid #666;
+            transition: background-color 0.2s ease; z-index: 10;
+        }
+        .pdf-button:hover { background-color: #666; }
+
+        /* --- Collapsible Content Styling (Notes & Video Only) --- */
+        .collapsible-content {
+            overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            max-height: 3000px; /* Increased max-height */ padding: 10px 0; text-align: left;
+        }
+        .collapsible-content.collapsed { max-height: 0; padding-top: 0; padding-bottom: 0; }
+
+        /* --- YouTube Video Embed Styling --- */
+        .video-container {
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+            max-width: 100%; background: #000; margin: 10px 0 20px 0; border-radius: 8px;
+        }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        /* --- Topic Quiz Styling --- */
+         .topic-quiz-section { margin-top: 15px; border-top: 1px solid #444; padding-top: 15px; }
+         .quiz-container { margin-top: 15px; } /* Container for questions */
+         .quiz-question { margin-bottom: 15px; font-weight: 600; color: #fff; text-align: left;}
+         .quiz-options button {
+             display: block; width: 100%; text-align: left; padding: 10px 15px; margin-bottom: 8px;
+             background-color: #333; border: 1px solid #555; color: #eee; border-radius: 8px;
+             cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease;
+         }
+         .quiz-options button:hover { background-color: #444; border-color: #777; }
+         .quiz-options button.selected { background-color: #A40000; border-color: #C80000; }
+         .quiz-options button.correct { background-color: #28a745; border-color: #34d058; color: white; }
+         .quiz-options button.incorrect { background-color: #dc3545; border-color: #e45665; color: white; }
+         .quiz-feedback { margin-top: 10px; font-size: 0.95em; padding: 8px; border-radius: 5px; text-align: left; }
+         .quiz-feedback.correct { background-color: rgba(40, 167, 69, 0.2); color: #a3d9b1; border: 1px solid rgba(40, 167, 69, 0.5); }
+         .quiz-feedback.incorrect { background-color: rgba(220, 53, 69, 0.2); color: #f1b0b7; border: 1px solid rgba(220, 53, 69, 0.5); }
+         .quiz-score { margin-top: 20px; font-size: 1.1em; font-weight: bold; text-align: center; }
+
+         /* --- Total Quiz (Slide-Based) Styling --- */
+        #biology-total-quiz-page .quiz-question-slide { display: none; text-align: left; }
+        #biology-total-quiz-page .quiz-question-slide.active { display: block; }
+        .total-quiz-navigation { display: flex; justify-content: space-between; margin-top: 25px; }
+        .total-quiz-navigation .button { width: auto; padding: 10px 25px; }
+        .total-quiz-results { margin-top: 20px; font-size: 1.1em; font-weight: bold; text-align: left; }
+        .total-quiz-results p { margin-bottom: 8px; font-size: 1em; font-weight: normal;}
+        .total-quiz-results span.correct { color: #28a745; font-weight: bold; }
+        .total-quiz-results span.incorrect { color: #dc3545; font-weight: bold; }
+        .total-quiz-results em { color: #a3d9b1; } /* Correct answer highlight */
+        .total-quiz-results hr { border: 0; height: 1px; background-color: #444; margin: 15px 0;} /* Style hr */
+
+        /* --- Footer --- */
+        .footer { margin-top: 30px; text-align: center; width: 100%; max-width: 900px; }
+        .disclaimer { font-size: 0.85em; color: #aaa; line-height: 1.5; }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 640px) {
+            .container { padding: 25px 20px; }
+            h1 { font-size: 1.7em; } h2 { font-size: 1.4em; } h3.collapsible-header { font-size: 1.15em; }
+            p.instructions { font-size: 1em; margin-bottom: 25px; }
+            .button { padding: 12px 18px; font-size: 1em; }
+            .pdf-button { top: 10px; right: 10px; font-size: 0.75em; }
+            .disclaimer { font-size: 0.8em; }
+            .biology-topic-content p, .biology-topic-content li { font-size: 0.95em; }
+            .quiz-options button { padding: 8px 12px; font-size: 0.95em;}
+            .biology-topic-grid { grid-template-columns: 1fr; } /* Stack buttons */
+            .content-table { font-size: 0.85em; } /* Smaller table text */
+            .content-table th, .content-table td { padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <div class="container">
+
+            <div id="biology-main-page">
+                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version (Main)</button>
+                 <h1>Biology Resources</h1>
+                 <p class="instructions">Select a topic or try the summary quiz.</p>
+
+                 <ul class="biology-topic-grid">
+                     <li><button class="button" onclick="showBiologyTopic('topic-1-1')">1.1 Eukaryotic & Prokaryotic Cells</button></li>
+                     <li><button class="button" onclick="showBiologyTopic('topic-1-2')">1.2 Specialised Cells</button></li>
+                     <li><button class="button" onclick="showBiologyTopic('topic-1-3')">1.3 Microscopy Technology</button></li>
+                     <li><button class="button" onclick="showBiologyTopic('topic-1-4')">1.4 Size, Scale & Estimation</button></li>
+                     <li><button class="button" onclick="showBiologyTopic('topic-1-5')">1.5 Quantitative Units & Standard Form</button></li>
+                     <li><button class="button" onclick="showBiologyTopic('topic-1-6')">1.6 Core Practical: Microscopy</button></li>
+                     <li><button class="button" onclick="showBiologyTopic('topic-1-7')">1.7 Enzyme Mechanism</button></li>
+                     <li><button class="button" onclick="showBiologyTopic('topic-1-8')">1.8 Enzyme Denaturation</button></li>
+                     <li><button class="button" onclick="showBiologyTopic('topic-1-9')">1.9 Factors Affecting Enzyme Activity</button></li>
+                     <li><button class="button" onclick="showBiologyTopic('topic-1-10')">1.10 Core Practical: Effect of pH</button></li>
+                     <li><button class="button" onclick="showBiologyTopic('topic-1-11')">1.11 Rate Calculations</button></li>
+                     <li><button class="button" onclick="showBiologyTopic('topic-1-12')">1.12 Importance of Enzymes</button></li>
+                 </ul>
+
+                 <button class="button start-quiz-button" style="margin-top: 25px; background-color: #16a34a;" onclick="showTotalBiologyQuiz()">Total Biology Quiz</button>
+
+                 <a href="kap5-science.html" class="button back-button">Back to Science</a>
+            </div>
+
+            <div id="topic-1-1" class="biology-topic-content">
+                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <h2>1.1 Eukaryotic & Prokaryotic Cells</h2>
+
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
+                 <div class="collapsible-content revision-notes">
+                     <p>Cells are the fundamental units of life, broadly categorised as Eukaryotic or Prokaryotic.</p>
+                     <ul>
+                         <li><strong>Eukaryotic Cells:</strong> Found in animals, plants, fungi, and protists. Characterised by a membrane-bound <strong>nucleus</strong> containing linear DNA (chromosomes) and various membrane-bound <strong>organelles</strong> (e.g., mitochondria, chloroplasts). Generally larger and more complex.</li>
+                         <li><strong>Prokaryotic Cells:</strong> Found in bacteria and archaea. Simpler and smaller. Lack a true nucleus; their genetic material is a single, circular DNA molecule located in the cytoplasm (<strong>nucleoid region</strong>). Lack complex membrane-bound organelles. May possess small, circular DNA molecules called <strong>plasmids</strong>.</li>
+                     </ul>
+                     <h4>Animal Cells (Eukaryotic)</h4>
+                     <ul>
+                         <li><strong>Nucleus:</strong> Contains DNA; controls cell activities.</li>
+                         <li><strong>Cell Membrane:</strong> Controls what enters/leaves the cell (selectively permeable).</li>
+                         <li><strong>Mitochondria:</strong> Site of aerobic respiration; release energy (ATP).</li>
+                         <li><strong>Ribosomes:</strong> Site of protein synthesis.</li>
+                         <li><strong>Cytoplasm:</strong> Jelly-like substance where reactions occur.</li>
+                     </ul>
+                     <h4>Plant Cells (Eukaryotic)</h4>
+                     <ul>
+                         <li>Includes animal cell structures plus:</li>
+                         <li><strong>Cell Wall:</strong> Rigid outer layer (made of <strong>cellulose</strong>); provides structural support and prevents bursting.</li>
+                         <li><strong>Chloroplasts:</strong> Site of photosynthesis; contain chlorophyll (green pigment).</li>
+                         <li><strong>Permanent Large Central Vacuole:</strong> Contains cell sap; maintains turgor pressure (keeps cell firm).</li>
+                     </ul>
+                     <h4>Bacterial Cells (Prokaryotic)</h4>
+                     <ul>
+                         <li><strong>Cell Wall:</strong> Provides support (made of <strong>peptidoglycan</strong>).</li>
+                         <li><strong>Cell Membrane:</strong> Controls entry/exit.</li>
+                         <li><strong>Cytoplasm:</strong> Contains ribosomes and genetic material.</li>
+                         <li><strong>Chromosomal DNA:</strong> Single, circular loop in the nucleoid region.</li>
+                         <li><strong>Plasmid DNA:</strong> Small, circular DNA rings (optional); may carry genes for antibiotic resistance.</li>
+                         <li><strong>Ribosomes:</strong> Protein synthesis (smaller than eukaryotic ones).</li>
+                         <li><strong>Flagella:</strong> Optional whip-like tail(s) for movement.</li>
+                     </ul>
+                     <h4>Comparison Table</h4>
+                     <table class="content-table">
+                        <thead>
+                            <tr><th>Feature</th><th>Animal Cell (Eukaryotic)</th><th>Plant Cell (Eukaryotic)</th><th>Bacterial Cell (Prokaryotic)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Nucleus</td><td>Present</td><td>Present</td><td>Absent (Nucleoid region)</td></tr>
+                            <tr><td>Genetic Material</td><td>Linear DNA</td><td>Linear DNA</td><td>Circular DNA</td></tr>
+                            <tr><td>Plasmid DNA</td><td>Absent</td><td>Absent</td><td>Often Present</td></tr>
+                            <tr><td>Cell Membrane</td><td>Present</td><td>Present</td><td>Present</td></tr>
+                            <tr><td>Cell Wall</td><td>Absent</td><td>Present (Cellulose)</td><td>Present (Peptidoglycan)</td></tr>
+                            <tr><td>Mitochondria</td><td>Present</td><td>Present</td><td>Absent</td></tr>
+                            <tr><td>Chloroplasts</td><td>Absent</td><td>Present</td><td>Absent</td></tr>
+                            <tr><td>Ribosomes</td><td>Present (Larger)</td><td>Present (Larger)</td><td>Present (Smaller)</td></tr>
+                            <tr><td>Vacuole</td><td>Small/Absent</td><td>Large, central</td><td>Absent</td></tr>
+                            <tr><td>Flagella</td><td>Absent (except sperm)</td><td>Absent (most)</td><td>Sometimes Present</td></tr>
+                        </tbody>
+                     </table>
+                 </div>
+
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Relevant Video</h3>
+                 <div class="collapsible-content">
+                     <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/Pxujitlv8wc" title="Cells Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                     </div>
+                 </div>
+
+                 <h3 class="topic-quiz-header">Topic Quiz</h3>
+                 <button class="button start-quiz-button" onclick="startTopicQuiz('topic-1-1', this)">Start Topic 1.1 Quiz</button>
+                 <div class="quiz-container" id="quiz-topic-1-1">
+                     <div class="quiz-score"></div>
+                 </div>
+
+                 <button class="button back-button" onclick="showBiologyMainPage()">Back to Biology Topics</button>
+            </div>
+
+            <div id="topic-1-2" class="biology-topic-content">
+                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <h2>1.2 Specialised Cells</h2>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
+                 <div class="collapsible-content revision-notes">
+                    <p>In multicellular organisms, cells <strong>differentiate</strong> to become specialised, meaning they develop specific structures (adaptations) that allow them to perform a particular function effectively.</p>
+                    <h4>Sperm Cells</h4>
+                    <ul>
+                        <li><strong>Function:</strong> To transport the male's DNA to the egg cell for fertilisation.</li>
+                        <li><strong>Adaptations:</strong>
+                            <ul>
+                                <li><strong>Tail (Flagellum):</strong> Long tail whips side-to-side for propulsion (swimming).</li>
+                                <li><strong>Mitochondria:</strong> Numerous mitochondria packed in the mid-section provide abundant energy (ATP) for tail movement.</li>
+                                <li><strong>Acrosome:</strong> Cap-like structure on the head containing digestive enzymes to break down the outer layers of the egg cell.</li>
+                                <li><strong>Haploid Nucleus:</strong> Contains only one set of chromosomes (half the normal number) so that upon fertilisation, the resulting zygote has the correct diploid number.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h4>Egg Cells (Ova)</h4>
+                    <ul>
+                        <li><strong>Function:</strong> To be fertilised by sperm and provide nutrients for the initial growth of the embryo.</li>
+                        <li><strong>Adaptations:</strong>
+                            <ul>
+                                <li><strong>Nutrient-Rich Cytoplasm:</strong> Contains a large store of energy-rich food (lipids, proteins) to nourish the developing embryo until implantation.</li>
+                                <li><strong>Haploid Nucleus:</strong> Contains one set of chromosomes.</li>
+                                <li><strong>Membrane Changes after Fertilisation:</strong> The cell membrane structure changes immediately after one sperm enters, forming a barrier (fertilisation membrane) to prevent other sperm from entering (polyspermy block).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h4>Ciliated Epithelial Cells</h4>
+                    <ul>
+                        <li><strong>Function:</strong> Found lining surfaces such as the trachea and bronchi. They move mucus (containing trapped dust, bacteria, and viruses) upwards, away from the lungs, to be swallowed or expelled.</li>
+                        <li><strong>Adaptations:</strong>
+                            <ul>
+                                <li><strong>Cilia:</strong> Tiny hair-like projections on the cell surface that beat in a coordinated, wave-like rhythm to sweep the mucus along.</li>
+                                <li><strong>Mitochondria:</strong> Numerous mitochondria provide the energy (ATP) required for the continuous movement of the cilia.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h4>Adaptations Summary Table</h4>
+                     <table class="content-table">
+                        <thead>
+                            <tr><th>Cell Type</th><th>Function</th><th>Key Adaptations</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Sperm Cell</td><td>Carry male DNA to egg</td><td><strong>Acrosome:</strong> Enzymes to penetrate egg.<br><strong>Haploid Nucleus:</strong> Half chromosome set.<br><strong>Mitochondria:</strong> Energy for swimming.<br><strong>Tail:</strong> Propulsion.</td></tr>
+                            <tr><td>Egg Cell (Ovum)</td><td>Be fertilised; provide early nutrients</td><td><strong>Nutrient-rich Cytoplasm:</strong> Food store.<br><strong>Haploid Nucleus:</strong> Half chromosome set.<br><strong>Membrane changes post-fertilisation:</strong> Prevents polyspermy.</td></tr>
+                            <tr><td>Ciliated Epithelial Cell</td><td>Move mucus along airways</td><td><strong>Cilia:</strong> Hair-like structures beat to move substances.<br><strong>Mitochondria:</strong> Provide energy for cilia movement.</td></tr>
+                        </tbody>
+                     </table>
+                 </div>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Relevant Video</h3>
+                 <div class="collapsible-content">
+                     <div class="video-container">
+                         <iframe src="https://www.youtube.com/embed/9mz3MMH1NjE" title="Specialised Cells Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                     </div>
+                 </div>
+                 <h3 class="topic-quiz-header">Topic Quiz</h3>
+                 <button class="button start-quiz-button" onclick="startTopicQuiz('topic-1-2', this)">Start Topic 1.2 Quiz</button>
+                 <div class="quiz-container" id="quiz-topic-1-2">
+                     <div class="quiz-score"></div>
+                 </div>
+                 <button class="button back-button" onclick="showBiologyMainPage()">Back to Biology Topics</button>
+            </div>
+
+            <div id="topic-1-3" class="biology-topic-content">
+                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <h2>1.3 Microscopy Technology</h2>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
+                 <div class="collapsible-content revision-notes">
+                     <p>Microscopes magnify objects too small to see with the naked eye. Key developments, especially electron microscopy, have significantly advanced our understanding of cell biology.</p>
+                     <h4>Light Microscopes (LM)</h4>
+                     <ul>
+                         <li>Use visible light passing through the specimen and glass lenses to magnify the image.</li>
+                         <li>Maximum useful <strong>magnification</strong> around $\times 1500$.</li>
+                         <li>Limited <strong>resolution</strong> (the ability to distinguish between two close points as separate entities), typically around 200 nm (0.2 $\mu m$). This means structures closer than 200 nm appear as a single object.</li>
+                         <li>Advantages: Relatively inexpensive, easy to use, can view living specimens (in colour).</li>
+                     </ul>
+                     <h4>Electron Microscopes (EM)</h4>
+                     <ul>
+                         <li>Use a beam of electrons instead of light, and electromagnets instead of glass lenses. Electrons have a much shorter wavelength than light.</li>
+                         <li>Offer much higher <strong>magnification</strong> (e.g., $>\times 1,000,000$) and significantly better <strong>resolution</strong> (e.g., $<1$ nm).</li>
+                         <li>Allows visualisation of cellular <strong>ultrastructure</strong> (very fine details), such as ribosomes, internal membranes of mitochondria and chloroplasts, and viruses.</li>
+                         <li>Disadvantages: Very expensive, large, require complex specimen preparation (often involving heavy metal stains), specimens must be dead and observed in a vacuum, images are initially black and white.</li>
+                     </ul>
+                     <h4>Impact of EM</h4>
+                     <p>The superior resolution of electron microscopes allowed biologists to see sub-cellular structures in much greater detail than ever before. This enabled them to understand the relationship between the structure of organelles and their function (e.g., the folded inner membranes (cristae) in mitochondria provide a large surface area for respiration).</p>
+                     <h4>Comparison Table</h4>
+                     <table class="content-table">
+                        <thead>
+                            <tr><th>Feature</th><th>Light Microscope (LM)</th><th>Electron Microscope (EM)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Radiation Source</td><td>Visible Light</td><td>Beam of Electrons</td></tr>
+                            <tr><td>Lenses</td><td>Glass</td><td>Electromagnets</td></tr>
+                            <tr><td>Max Magnification</td><td>$\approx \times 1,500$</td><td>$>\times 1,000,000$</td></tr>
+                            <tr><td>Max Resolution</td><td>$\approx 200$ nm</td><td>$<1$ nm</td></tr>
+                            <tr><td>Specimen State</td><td>Living or Dead</td><td>Dead only</td></tr>
+                            <tr><td>Preparation</td><td>Simple</td><td>Complex</td></tr>
+                            <tr><td>Environment</td><td>Air</td><td>Vacuum</td></tr>
+                            <tr><td>Cost/Complexity</td><td>Lower</td><td>Very High</td></tr>
+                            <tr><td>Image Type</td><td>Colour</td><td>Black and White</td></tr>
+                        </tbody>
+                     </table>
+                 </div>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Relevant Video</h3>
+                 <div class="collapsible-content">
+                      <div class="video-container">
+                         <iframe src="https://www.youtube.com/embed/t4pc1MFRsvA" title="Microscopy Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                     </div>
+                 </div>
+                 <h3 class="topic-quiz-header">Topic Quiz</h3>
+                 <button class="button start-quiz-button" onclick="startTopicQuiz('topic-1-3', this)">Start Topic 1.3 Quiz</button>
+                 <div class="quiz-container" id="quiz-topic-1-3">
+                     <div class="quiz-score"></div>
+                 </div>
+                 <button class="button back-button" onclick="showBiologyMainPage()">Back to Biology Topics</button>
+            </div>
+
+            <div id="topic-1-4" class="biology-topic-content">
+                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <h2>1.4 Number, Size, Scale & Estimation</h2>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
+                 <div class="collapsible-content revision-notes">
+                    <p>Biology deals with structures across a vast range of sizes. Understanding scale and using estimation are important skills.</p>
+                    <ul>
+                        <li><strong>Scale:</strong> Recognising the relative sizes of objects is key. Cells are typically measured in <strong>micrometres ($\mu m$)</strong>, while smaller organelles like ribosomes are measured in <strong>nanometres (nm)</strong>. (See Topic 1.5 for units).</li>
+                        <li><strong>Estimation:</strong> Making a sensible, approximate calculation of a value (like size or number) without precise measurement. It's about making an educated guess based on available information.</li>
+                        <li><strong>Why Use Estimation?</strong>
+                            <ul>
+                                <li><strong>Reasonableness Check:</strong> To quickly verify if a calculated answer (e.g., magnification, actual size from a formula) is plausible or if a mistake might have been made (e.g., unit conversion error). Is the answer in the right ballpark?</li>
+                                <li><strong>Difficult Measurements:</strong> To approximate the size or number of objects that are hard to measure directly using tools like an eyepiece graticule. This applies to very small organelles, irregularly shaped structures, or features without sharp, clear boundaries.</li>
+                                <li><strong>Field of View:</strong> Estimating how many cells fit across the diameter of the microscope's field of view can give a rough idea of cell size if the field diameter is known.</li>
+                            </ul>
+                        </li>
+                        <li><strong>How to Estimate Size (using a known reference in an image):</strong>
+                            <ol>
+                                <li>Identify a structure within the image whose actual size is known or can be determined (e.g., a scale bar provided on the micrograph, or perhaps the known diameter of the entire cell).</li>
+                                <li>Visually compare the unknown structure (e.g., a nucleus) to the known reference structure (e.g., the cell diameter) *in the image*.</li>
+                                <li>Estimate the ratio: How many times smaller or larger does the unknown structure appear compared to the reference? (e.g., "The nucleus looks about one-third the width of the cell image").</li>
+                                <li>Calculate the estimated actual size: Multiply the actual size of the reference structure by the estimated ratio. (e.g., If cell actual diameter = 30 $\mu m$, estimated nucleus actual diameter $\approx \frac{1}{3} \times 30 \, \mu m = 10 \, \mu m$).</li>
+                            </ol>
+                        </li>
+                    </ul>
+                 </div>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Relevant Video</h3>
+                 <div class="collapsible-content">
+                     <div class="video-container">
+                         <iframe src="https://www.youtube.com/embed/CR8z9bLufZM" title="Scale and Estimation Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                     </div>
+                 </div>
+                 <h3 class="topic-quiz-header">Topic Quiz</h3>
+                 <button class="button start-quiz-button" onclick="startTopicQuiz('topic-1-4', this)">Start Topic 1.4 Quiz</button>
+                 <div class="quiz-container" id="quiz-topic-1-4">
+                     <div class="quiz-score"></div>
+                 </div>
+                 <button class="button back-button" onclick="showBiologyMainPage()">Back to Biology Topics</button>
+            </div>
+
+            <div id="topic-1-5" class="biology-topic-content">
+                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <h2>1.5 Quantitative Units & Standard Form</h2>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
+                 <div class="collapsible-content revision-notes">
+                    <p>Accurate use of scientific units and handling very large or small numbers using standard form are essential skills in quantitative biology, especially microscopy.</p>
+                    <h4>Metric Prefixes for Length/Size</h4>
+                    <table class="content-table">
+                        <thead><tr><th>Prefix</th><th>Symbol</th><th>Power of 10 (relative to metre)</th><th>Meaning</th></tr></thead>
+                        <tbody>
+                            <tr><td>(metre)</td><td>m</td><td>$10^0$</td><td>Base unit</td></tr>
+                            <tr><td><strong>milli</strong></td><td>m</td><td>$10^{-3}$</td><td>one thousandth</td></tr>
+                            <tr><td><strong>micro</strong></td><td>$\mu$</td><td>$10^{-6}$</td><td>one millionth</td></tr>
+                            <tr><td><strong>nano</strong></td><td>n</td><td>$10^{-9}$</td><td>one billionth</td></tr>
+                            <tr><td><strong>pico</strong></td><td>p</td><td>$10^{-12}$</td><td>one trillionth</td></tr>
+                        </tbody>
+                    </table>
+                    <h4>Converting Between Units</h4>
+                    <ul>
+                        <li>Each step involves multiplying or dividing by <strong>1000</strong>.</li>
+                        <li><strong>Going DOWN (to smaller units):</strong> Multiply by 1000 per step.
+                            <ul><li>m $\to$ mm ($\times 1000$)</li><li>mm $\to$ $\mu m$ ($\times 1000$)</li><li>$\mu m$ $\to$ nm ($\times 1000$)</li><li>nm $\to$ pm ($\times 1000$)</li></ul>
+                        </li>
+                        <li><strong>Going UP (to larger units):</strong> Divide by 1000 per step.
+                            <ul><li>pm $\to$ nm ($\div 1000$)</li><li>nm $\to$ $\mu m$ ($\div 1000$)</li><li>$\mu m$ $\to$ mm ($\div 1000$)</li><li>mm $\to$ m ($\div 1000$)</li></ul>
+                        </li>
+                        <li>Example: $2$ mm $= 2 \times 1000 = 2000$ $\mu m$ $= 2000 \times 1000 = 2,000,000$ nm.</li>
+                        <li>Example: $50$ nm $= 50 \div 1000 = 0.05$ $\mu m$ $= 0.05 \div 1000 = 0.00005$ mm.</li>
+                    </ul>
+                    <h4>Standard Form (Scientific Notation)</h4>
+                    <ul>
+                        <li>Used to express very large or very small numbers conveniently.</li>
+                        <li>Format: $A \times 10^n$
+                            <ul><li>$A$ is a number such that $1 \le A < 10$.</li><li>$n$ is an integer (positive, negative, or zero) representing the power of 10.</li></ul>
+                        </li>
+                        <li><strong>Large Numbers (n is positive):</strong> The decimal point moves $n$ places to the right. Example: $3,400,000 = 3.4 \times 10^6$.</li>
+                        <li><strong>Small Numbers (n is negative):</strong> The decimal point moves $n$ places to the left. Example: $0.000072 = 7.2 \times 10^{-5}$.</li>
+                        <li><strong>Calculations:</strong>
+                            <ul>
+                                <li><strong>Multiplication:</strong> Multiply the $A$ values and add the powers ($n$). Adjust the result to standard form if needed. <br> $(2 \times 10^5) \times (4 \times 10^{-2}) = (2 \times 4) \times 10^{(5 + (-2))} = 8 \times 10^3$.</li>
+                                <li><strong>Division:</strong> Divide the $A$ values and subtract the powers ($n$). Adjust the result if needed.<br> $(9 \times 10^7) \div (3 \times 10^3) = (9 \div 3) \times 10^{(7 - 3)} = 3 \times 10^4$.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                 </div>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Relevant Video</h3>
+                 <div class="collapsible-content">
+                     <div class="video-container">
+                          <iframe src="https://www.youtube.com/embed/AWof6" title="Standard Form Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                     </div>
+                 </div>
+                 <h3 class="topic-quiz-header">Topic Quiz</h3>
+                 <button class="button start-quiz-button" onclick="startTopicQuiz('topic-1-5', this)">Start Topic 1.5 Quiz</button>
+                 <div class="quiz-container" id="quiz-topic-1-5">
+                     <div class="quiz-score"></div>
+                 </div>
+                 <button class="button back-button" onclick="showBiologyMainPage()">Back to Biology Topics</button>
+            </div>
+
+             <div id="topic-1-6" class="biology-topic-content">
+                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <h2>1.6 Core Practical: Microscopy</h2>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
+                 <div class="collapsible-content revision-notes">
+                    <p>This practical involves using a light microscope to observe biological specimens, calculate magnification, and produce labelled scientific drawings.</p>
+                    <h4>Using a Light Microscope Safely and Effectively</h4>
+                    <ol>
+                        <li><strong>Starting Point:</strong> Always begin with the <strong>lowest power objective lens</strong> clicked into position and the stage lowered using the coarse focus knob.</li>
+                        <li><strong>Placing the Slide:</strong> Place the prepared microscope slide onto the stage and secure it gently with the stage clips, ensuring the specimen is over the hole in the stage.</li>
+                        <li><strong>Initial Focusing (Low Power):</strong> Look through the eyepiece lens. Turn the <strong>coarse focus knob</strong> slowly (usually towards you to raise the stage) until the image comes into rough focus. Be careful not to raise the stage too high and hit the objective lens.</li>
+                        <li><strong>Fine Focusing:</strong> Use the <strong>fine focus knob</strong> to bring the image into sharp, clear focus. Adjust the diaphragm or lamp intensity for optimal lighting if necessary.</li>
+                        <li><strong>Increasing Magnification:</strong> Carefully rotate the revolving nosepiece to select the next higher power objective lens. The microscope should be roughly parfocal, meaning the image remains approximately in focus.</li>
+                        <li><strong>Refocusing (High Power):</strong> Use *only* the <strong>fine focus knob</strong> to sharpen the image at higher magnification. Never use the coarse focus knob at high power, as this can easily crash the objective lens into the slide, damaging both.</li>
+                    </ol>
+                    <h4>Preparing a Temporary Wet Mount (e.g., Onion Epidermis)</h4>
+                    <ol>
+                        <li>Place a clean microscope slide on a flat surface. Add one drop of water (or appropriate liquid like saline) to the centre.</li>
+                        <li>Obtain a thin sample of the specimen. For onion, carefully peel a single, transparent layer of epidermis from the inner surface of an onion slice using forceps.</li>
+                        <li>Place the specimen flat within the water drop, trying to avoid folds.</li>
+                        <li>If necessary, add a drop of biological stain (e.g., iodine solution for onion cells to make the nucleus and cell walls more visible; methylene blue for cheek cells). Allow the stain to diffuse for a minute or two.</li>
+                        <li>Take a clean coverslip. Hold it at an angle (approx. $45^{\circ}$) with one edge touching the side of the liquid drop on the slide.</li>
+                        <li>Lower the coverslip slowly and carefully using a mounted needle or forceps to gently guide it down. This technique minimizes the trapping of air bubbles, which appear as distinct circles with dark edges under the microscope and can obscure the view.</li>
+                        <li>Use a piece of tissue paper to gently blot away any excess liquid that has squeezed out from under the edges of the coverslip.</li>
+                    </ol>
+                    <h4>Magnification Calculations</h4>
+                    <ul>
+                        <li><strong>Total Magnification</strong> = (Magnification of Eyepiece Lens) $\times$ (Magnification of Objective Lens). (Eyepiece is usually $\times 10$).</li>
+                        <li><strong>Image Size, Actual Size, Magnification Relationship (I AM triangle):</strong> Remember the formula triangle.
+                            <ul>
+                                <li>Magnification (M) $$ M = \frac{\text{Image Size (I)}}{\text{Actual Size (A)}} $$</li>
+                                <li>Actual Size (A) $$ A = \frac{\text{Image Size (I)}}{\text{Magnification (M)}} $$</li>
+                                <li>Image Size (I) $$ I = \text{Actual Size (A)} \times \text{Magnification (M)} $$</li>
+                            </ul>
+                        </li>
+                        <li><strong>Units Consistency:</strong> This is CRITICAL. Before calculating, ensure Image Size (I) (measured from your drawing or micrograph, e.g., in mm) and Actual Size (A) (the real size of the specimen, e.g., in $\mu m$) are converted to the *same units*. It's often easiest to convert the image size measurement to $\mu m$ (1 mm = 1000 $\mu m$). Magnification (M) itself has no units.</li>
+                    </ul>
+                    <h4>Producing Labelled Scientific Drawings</h4>
+                    <ul>
+                        <li><strong>Pencil Only:</strong> Use a sharp HB pencil for all lines and labels. Ensure lines are clean and not smudged.</li>
+                        <li><strong>Size & Proportion:</strong> Drawing should be large enough (e.g., occupying at least half the page/space) to show details clearly and accurately represent the proportions of the structures observed.</li>
+                        <li><strong>Lines:</strong> Use clear, solid, continuous lines for outlines (no sketching, feathering, or gaps). Avoid shading unless specifically representing stained areas (use stippling sparingly if needed).</li>
+                        <li><strong>Accuracy & Detail:</strong> Draw only what you can clearly observe through the microscope at that magnification. Do not add details from memory or textbooks that are not visible. Represent the structures faithfully.</li>
+                        <li><strong>Labels:</strong> Use a ruler to draw straight label lines. Lines should start exactly at the structure being labelled and extend horizontally to the margin. Do not use arrowheads on the end of the label line. Label lines should not cross each other. Write labels clearly, printed horizontally, usually outside the drawing area.</li>
+                        <li><strong>Information:</strong> Include a clear, underlined title stating what the drawing shows (e.g., "Drawing of human cheek cells"). Include the total magnification used (e.g., $\times 100$, $\times 400$).</li>
+                    </ul>
+                 </div>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Relevant Video</h3>
+                 <div class="collapsible-content">
+                     <div class="video-container">
+                          <iframe src="https://www.youtube.com/embed/LXypBNA4w3E" title="Microscopy Practical Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                     </div>
+                 </div>
+                 <h3 class="topic-quiz-header">Topic Quiz</h3>
+                 <button class="button start-quiz-button" onclick="startTopicQuiz('topic-1-6', this)">Start Topic 1.6 Quiz</button>
+                 <div class="quiz-container" id="quiz-topic-1-6">
+                     <div class="quiz-score"></div>
+                 </div>
+                 <button class="button back-button" onclick="showBiologyMainPage()">Back to Biology Topics</button>
+            </div>
+
+            <div id="topic-1-7" class="biology-topic-content">
+                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <h2>1.7 Enzyme Mechanism</h2>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
+                 <div class="collapsible-content revision-notes">
+                     <p>Enzymes are <strong>biological catalysts</strong>, typically proteins, that accelerate metabolic reactions by lowering the activation energy needed for the reaction to start. They remain unchanged at the end of the reaction.</p>
+                     <h4>Key Features & Function</h4>
+                     <ul>
+                         <li><strong>Active Site:</strong> A unique, three-dimensional pocket or groove on the enzyme's surface. Its specific shape is crucial for function and is determined by the enzyme's amino acid sequence and folding (tertiary structure).</li>
+                         <li><strong>Substrate:</strong> The specific molecule(s) that bind to the active site and are acted upon by the enzyme.</li>
+                         <li><strong>Specificity:</strong> Enzymes exhibit high specificity. This means that the shape of the active site is complementary to the shape of only one specific substrate (or a very small group of structurally similar substrates), like a key fitting into a lock.</li>
+                     </ul>
+                     <h4>Mechanism of Action</h4>
+                     <ol>
+                         <li>The substrate molecule collides with the enzyme's active site (requires sufficient kinetic energy).</li>
+                         <li>The substrate binds to the active site, forming a temporary <strong>enzyme-substrate complex</strong>.</li>
+                         <li>The enzyme facilitates the chemical reaction (e.g., breaking bonds in the substrate or joining substrates together), converting the substrate into product(s). The binding can strain bonds within the substrate, making the reaction easier.</li>
+                         <li>The product(s) are released from the active site, as their shape is no longer complementary.</li>
+                         <li>The enzyme's active site is now free to bind with another substrate molecule; the enzyme is regenerated.</li>
+                     </ol>
+                     <h4>Models of Enzyme Action</h4>
+                     <ul>
+                         <li><strong>Lock and Key Model:</strong> An earlier, simpler model suggesting the active site and substrate have fixed, rigid shapes that fit together perfectly, like a specific key fitting into a specific lock.</li>
+                         <li><strong>Induced Fit Model (Currently Accepted):</strong> A more dynamic and accurate model. It proposes that the active site is somewhat flexible. The binding of the substrate induces a subtle change in the shape of the active site, allowing it to mould around the substrate for a tighter, more precise fit (like a glove adjusting to a hand). This induced fit optimizes the catalytic activity by positioning chemical groups correctly and potentially straining substrate bonds.</li>
+                     </ul>
+                 </div>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Relevant Video</h3>
+                 <div class="collapsible-content">
+                     <div class="video-container">
+                         <iframe src="https://www.youtube.com/embed/V4OPO6JQLOE" title="Enzyme Action Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                     </div>
+                 </div>
+                 <h3 class="topic-quiz-header">Topic Quiz</h3>
+                 <button class="button start-quiz-button" onclick="startTopicQuiz('topic-1-7', this)">Start Topic 1.7 Quiz</button>
+                 <div class="quiz-container" id="quiz-topic-1-7">
+                     <div class="quiz-score"></div>
+                 </div>
+                 <button class="button back-button" onclick="showBiologyMainPage()">Back to Biology Topics</button>
+            </div>
+
+             <div id="topic-1-8" class="biology-topic-content">
+                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <h2>1.8 Enzyme Denaturation</h2>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
+                 <div class="collapsible-content revision-notes">
+                     <ul>
+                         <li><strong>Denaturation Definition:</strong> A process where the specific three-dimensional structure of a protein, particularly an enzyme, is altered, leading to a loss of its biological function. Crucially, this involves a change in the precise shape of the <strong>active site</strong>. This change is usually <strong>permanent (irreversible)</strong>.</li>
+                         <li><strong>Causes:</strong> Enzymes function optimally within specific environmental conditions. Denaturation is typically caused by exposure to conditions outside this optimal range, primarily:
+                            <ul>
+                                <li><strong>High Temperatures:</strong> As temperature increases significantly beyond the optimum, the atoms within the enzyme molecule vibrate more vigorously. This increased energy breaks the relatively weak bonds (like hydrogen bonds and ionic bonds) that maintain the enzyme's specific tertiary structure (its precise 3D folded shape).</li>
+                                <li><strong>Extreme pH Values:</strong> pH measures acidity/alkalinity. Each enzyme has an optimum pH. At pH values far from this optimum (either too acidic or too alkaline), the concentration of H$^+$ or OH$^-$ ions interferes with the charges on the amino acid R-groups within the enzyme. This disrupts the ionic and hydrogen bonds responsible for maintaining the correct tertiary structure and active site shape.</li>
+                            </ul>
+                         </li>
+                         <li><strong>Mechanism & Consequence:</strong> The breaking of weak bonds causes the enzyme molecule to unravel or change shape. This alters the specific 3D conformation of the active site. Since the active site's shape is no longer complementary to the substrate molecule, the substrate cannot bind effectively (or at all). As a result, the enzyme loses its catalytic activity and cannot function.</li>
+                     </ul>
+                 </div>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Relevant Video</h3>
+                 <div class="collapsible-content">
+                     <div class="video-container">
+                         <iframe src="https://www.youtube.com/embed/pKJ44zG1BMA" title="Enzyme Denaturation Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                     </div>
+                 </div>
+                 <h3 class="topic-quiz-header">Topic Quiz</h3>
+                 <button class="button start-quiz-button" onclick="startTopicQuiz('topic-1-8', this)">Start Topic 1.8 Quiz</button>
+                 <div class="quiz-container" id="quiz-topic-1-8">
+                     <div class="quiz-score"></div>
+                 </div>
+                 <button class="button back-button" onclick="showBiologyMainPage()">Back to Biology Topics</button>
+            </div>
+
+            <div id="topic-1-9" class="biology-topic-content">
+                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <h2>1.9 Factors Affecting Enzyme Activity</h2>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
+                 <div class="collapsible-content revision-notes">
+                    <p>The rate of enzyme-catalysed reactions is influenced by several factors, including temperature, pH, and substrate concentration.</p>
+                    <h4>Temperature</h4>
+                    <ul>
+                        <li><strong>Effect:</strong> As temperature increases, molecules gain kinetic energy, move faster, and collide more frequently. This increases the rate of enzyme-substrate complex formation and thus the reaction rate, up to a point.</li>
+                        <li><strong>Optimum Temperature:</strong> Each enzyme has an optimum temperature at which it functions most efficiently (highest rate). For most human enzymes, this is around $37^{\circ}$C (body temperature).</li>
+                        <li><strong>Above Optimum:</strong> At temperatures significantly above the optimum, the enzyme begins to <strong>denature</strong>. The increased vibrations break bonds, changing the active site shape. The rate decreases rapidly as the enzyme loses function.</li>
+                        <li><strong>Graphical Representation:</strong> Rate vs. Temperature graph typically shows a curve rising to a peak (optimum) and then falling sharply.</li>
+                    </ul>
+                    <h4>pH</h4>
+                     <ul>
+                        <li><strong>Effect on Structure:</strong> pH affects the ionisation state (charges) of amino acid R-groups within the enzyme, particularly those forming the active site. These charges are crucial for maintaining the enzyme's tertiary structure and for binding the substrate.</li>
+                        <li><strong>Optimum pH:</strong> Each enzyme has a specific optimum pH at which its conformation is ideal for maximum activity. This varies widely depending on the enzyme and its location (e.g., pepsin in the acidic stomach, pH $\approx 2$; trypsin in the alkaline small intestine, pH $\approx 8$).</li>
+                        <li><strong>Away from Optimum:</strong> At pH values significantly above or below the optimum, the enzyme's structure is disrupted due to altered charges interfering with ionic and hydrogen bonds. This leads to <strong>denaturation</strong> (change in active site shape) and a decrease in reaction rate.</li>
+                        <li><strong>Graphical Representation:</strong> Rate vs. pH graph is typically a bell-shaped curve, with the peak representing the optimum pH.</li>
+                    </ul>
+                    <h4>Substrate Concentration</h4>
+                     <ul>
+                        <li><strong>Effect (at constant enzyme concentration):</strong> At low substrate concentrations, the reaction rate is directly proportional to the substrate concentration. Increasing the substrate provides more molecules to bind with available active sites, leading to more frequent enzyme-substrate complex formation. In this phase, the substrate concentration is the <strong>limiting factor</strong>.</li>
+                        <li><strong>Saturation Point:</strong> As substrate concentration continues to increase, the rate begins to level off and eventually reaches a maximum velocity ($V_{max}$). This plateau occurs because all the available enzyme active sites are occupied (<strong>saturated</strong>) with substrate molecules at any given moment. The enzymes are working at their maximum capacity.</li>
+                        <li><strong>Limiting Factor at Plateau:</strong> Once saturation is reached, adding more substrate will not increase the reaction rate further. The <strong>enzyme concentration</strong> (the number of available active sites) becomes the limiting factor.</li>
+                        <li><strong>Graphical Representation:</strong> Rate vs. Substrate Concentration graph shows an initial steep increase, then the slope gradually decreases until the rate becomes constant (plateau).</li>
+                    </ul>
+                 </div>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Relevant Video</h3>
+                 <div class="collapsible-content">
+                     <div class="video-container">
+                         <iframe src="https://www.youtube.com/embed/qgVFkRn8f10" title="Factors Affecting Enzymes Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                     </div>
+                 </div>
+                 <h3 class="topic-quiz-header">Topic Quiz</h3>
+                 <button class="button start-quiz-button" onclick="startTopicQuiz('topic-1-9', this)">Start Topic 1.9 Quiz</button>
+                 <div class="quiz-container" id="quiz-topic-1-9">
+                     <div class="quiz-score"></div>
+                 </div>
+                 <button class="button back-button" onclick="showBiologyMainPage()">Back to Biology Topics</button>
+            </div>
+
+            <div id="topic-1-10" class="biology-topic-content">
+                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <h2>1.10 Core Practical: Effect of pH on Amylase Activity</h2>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
+                 <div class="collapsible-content revision-notes">
+                    <p>This practical investigates how changing pH affects the rate at which the enzyme amylase breaks down starch.</p>
+                    <h4>Background & Principle</h4>
+                    <ul>
+                        <li><strong>Enzyme:</strong> Amylase (catalyses the breakdown of starch).</li>
+                        <li><strong>Substrate:</strong> Starch solution.</li>
+                        <li><strong>Product:</strong> Maltose (a sugar).</li>
+                        <li><strong>Testing for Starch:</strong> Iodine solution is used. It turns <strong>blue-black</strong> in the presence of starch and remains <strong>orange-brown/yellow</strong> in the absence of starch.</li>
+                        <li><strong>Aim:</strong> To determine the effect of different pH values on the time taken for amylase to digest starch completely.</li>
+                    </ul>
+                    <h4>Method Outline</h4>
+                    <ol>
+                        <li><strong>Set up Iodine:</strong> Place single drops of iodine solution into multiple wells of a spotting tile.</li>
+                        <li><strong>Prepare Solutions:</strong> Create a series of test tubes each containing amylase solution mixed with a buffer solution of a specific pH (e.g., pH 4, 5, 6, 7, 8, 9). Use the same concentration of amylase in each. Have a separate tube of starch solution.</li>
+                        <li><strong>Control Temperature:</strong> Place all test tubes (enzyme/buffer mixes and starch) into a water bath set at a constant, suitable temperature (e.g., $35^{\circ}$C) and allow them to reach this temperature (equilibration).</li>
+                        <li><strong>Start Reaction:</strong> Add a measured volume of the starch solution to one of the enzyme/buffer tubes (e.g., the pH 4 tube). Mix quickly and immediately start a timer. Keep the tube in the water bath.</li>
+                        <li><strong>Sampling:</strong> At regular intervals (e.g., every 20 seconds), use a clean pipette to transfer a drop of the reaction mixture from the test tube into one of the iodine wells on the spotting tile.</li>
+                        <li><strong>Observe & Record Endpoint:</strong> Note the colour. Continue sampling into fresh wells until the iodine solution no longer turns blue-black but remains orange-brown/yellow. Record the time taken to reach this endpoint (when all starch is digested).</li>
+                        <li><strong>Repeat for all pH values:</strong> Carry out steps 4-6 for each of the prepared pH buffer/amylase solutions.</li>
+                        <li><strong>Reliability:</strong> Repeat the entire experiment for each pH at least once more to check for consistency and calculate a mean time if appropriate.</li>
+                    </ol>
+                    <h4>Variables</h4>
+                    <ul>
+                        <li><strong>Independent Variable</strong> (what is changed): pH (controlled by using different buffer solutions).</li>
+                        <li><strong>Dependent Variable</strong> (what is measured): Time taken for starch digestion (until iodine remains orange-brown).</li>
+                        <li><strong>Calculating Rate:</strong> Rate can be calculated as $Rate = \frac{1}{Time}$ (in $s^{-1}$ or $min^{-1}$).</li>
+                        <li><strong>Control Variables</strong> (kept constant): Temperature (using water bath), enzyme concentration, starch concentration, total volume of reaction mixture.</li>
+                    </ul>
+                    <h4>Expected Results & Conclusion</h4>
+                    <ul>
+                        <li>The shortest time (fastest rate) will occur at the enzyme's optimum pH (e.g., often around pH 7 for salivary amylase).</li>
+                        <li>Longer times (slower rates) will be observed at pH values further away from the optimum due to the enzyme becoming less active or denatured.</li>
+                        <li>Plotting Rate ($1/$Time) against pH should yield a bell-shaped curve, peaking at the optimum pH.</li>
+                    </ul>
+                 </div>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Relevant Video</h3>
+                 <div class="collapsible-content">
+                     <div class="video-container">
+                         <iframe src="https://www.youtube.com/embed/sWH4a_nFTuE" title="Amylase pH Practical Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                     </div>
+                 </div>
+                 <h3 class="topic-quiz-header">Topic Quiz</h3>
+                 <button class="button start-quiz-button" onclick="startTopicQuiz('topic-1-10', this)">Start Topic 1.10 Quiz</button>
+                 <div class="quiz-container" id="quiz-topic-1-10">
+                     <div class="quiz-score"></div>
+                 </div>
+                 <button class="button back-button" onclick="showBiologyMainPage()">Back to Biology Topics</button>
+            </div>
+
+             <div id="topic-1-11" class="biology-topic-content">
+                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <h2>1.11 Rate Calculations for Enzyme Activity</h2>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
+                 <div class="collapsible-content revision-notes">
+                    <p>Calculating the rate of enzyme activity allows for quantitative comparison under different conditions.</p>
+                    <h4>Method 1: Change in Quantity over Time</h4>
+                    <ul>
+                        <li>This method is used when you can measure how much substrate is used up or how much product is formed over a specific time period.</li>
+                        <li><strong>Formula:</strong>
+                            $$ Rate = \frac{\text{Change in Quantity}}{\text{Time Taken}} $$
+                        </li>
+                        <li><strong>Example:</strong> If an enzyme produces 30 $cm^3$ of gas in 60 seconds, the rate is $\frac{30 \, cm^3}{60 \, s} = 0.5 \, cm^3/s$.</li>
+                        <li><strong>Units:</strong> Depend on what is measured (e.g., g/min, mol/s, $cm^3 min^{-1}$).</li>
+                    </ul>
+                    <h4>Method 2: Time Taken to Reach an Endpoint</h4>
+                    <ul>
+                        <li>This is often used in school practicals where it's easier to measure the time it takes for a specific observable event to occur (e.g., disappearance of starch, a colour change).</li>
+                        <li>Since rate is inversely proportional to time (faster reaction = less time), the rate can be expressed as the reciprocal of the time taken.</li>
+                        <li><strong>Formula:</strong>
+                            $$ Rate = \frac{1}{\text{Time Taken}} $$
+                        </li>
+                        <li><strong>Units:</strong> The unit will be "per unit time", such as $s^{-1}$ (per second) or $min^{-1}$ (per minute).</li>
+                        <li><strong>Example:</strong> If it takes 40 seconds for starch to disappear in an amylase experiment, the rate is $\frac{1}{40 \, s} = 0.025 \, s^{-1}$.</li>
+                    </ul>
+                    <h4>Calculating Rate from Graphs (Quantity vs. Time)</h4>
+                    <ul>
+                        <li>When plotting experimental data (e.g., volume of product vs. time), the graph is often a curve (steepest at the start, flattening over time as substrate is used up).</li>
+                        <li>The <strong>rate of reaction at any specific point in time</strong> is equal to the <strong>gradient (slope)</strong> of the curve at that exact point.</li>
+                        <li><strong>Finding the Gradient on a Curve:</strong>
+                            <ol>
+                                <li>Choose the time point on the x-axis.</li>
+                                <li>Draw a straight line that just touches the curve at that point without crossing it (this is a <strong>tangent</strong>). Make the tangent reasonably long.</li>
+                                <li>Choose two points on the tangent line (preferably far apart) and read their coordinates ($x_1, y_1$) and ($x_2, y_2$).</li>
+                                <li>Calculate the gradient: $$ Gradient = \frac{\text{Change in Y } (y_2 - y_1)}{\text{Change in X } (x_2 - x_1)} $$ This gradient represents the rate at that specific time.</li>
+                            </ol>
+                        </li>
+                        <li>The <strong>Initial Rate:</strong> The rate at the very beginning of the reaction (time = 0) is usually the fastest. It's found by calculating the gradient of the tangent drawn to the curve at t=0. This is often used for comparisons because conditions (like substrate concentration) are well-defined at the start.</li>
+                    </ul>
+                 </div>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Relevant Video</h3>
+                 <div class="collapsible-content">
+                     <div class="video-container">
+                         <iframe src="https://www.youtube.com/embed/PymzCXlQkRA" title="Rate of Reaction Calculation Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                     </div>
+                 </div>
+                 <h3 class="topic-quiz-header">Topic Quiz</h3>
+                 <button class="button start-quiz-button" onclick="startTopicQuiz('topic-1-11', this)">Start Topic 1.11 Quiz</button>
+                 <div class="quiz-container" id="quiz-topic-1-11">
+                     <div class="quiz-score"></div>
+                 </div>
+                 <button class="button back-button" onclick="showBiologyMainPage()">Back to Biology Topics</button>
+            </div>
+
+            <div id="topic-1-12" class="biology-topic-content">
+                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <h2>1.12 Importance of Enzymes</h2>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
+                 <div class="collapsible-content revision-notes">
+                     <p>Enzymes are indispensable <strong>biological catalysts</strong> that regulate the speed of virtually all chemical reactions (metabolism) occurring within living organisms, enabling life processes to occur efficiently under physiological conditions (normal body temperature and pH).</p>
+                     <h4>Role in Breakdown (Catabolism / Digestion)</h4>
+                     <ul>
+                         <li>Enzymes are essential for breaking down large, complex, often insoluble food molecules into smaller, simpler, soluble molecules that can be absorbed into the bloodstream and utilized by cells.</li>
+                         <li><strong>Carbohydrases</strong> catalyse the breakdown of complex carbohydrates (polysaccharides like starch) into simple sugars (monosaccharides like glucose).
+                            <ul><li>Example: Salivary and pancreatic <strong>amylase</strong> break down starch $\to$ maltose (a disaccharide). Enzymes like <strong>maltase</strong> then break down maltose $\to$ glucose.</li></ul>
+                         </li>
+                         <li><strong>Proteases</strong> catalyse the breakdown of proteins $\to$ amino acids.
+                            <ul><li>Example: <strong>Pepsin</strong> (in stomach) begins protein digestion. <strong>Trypsin</strong> (in small intestine) continues the process, breaking proteins and polypeptides into smaller peptides and amino acids.</li></ul>
+                         </li>
+                         <li><strong>Lipases</strong> catalyse the breakdown of lipids (fats and oils) $\to$ fatty acids and glycerol.</li>
+                     </ul>
+                     <h4>Role in Synthesis (Anabolism)</h4>
+                     <ul>
+                         <li>Enzymes are equally crucial for building up large, complex molecules from smaller, simpler precursor units. These processes require energy and are essential for growth, repair, storage, and creating cellular components.</li>
+                         <li><strong>Carbohydrate Synthesis:</strong> e.g., Enzymes like glycogen synthase join glucose molecules to form glycogen (in animals) or starch (in plants) for energy storage.</li>
+                         <li><strong>Protein Synthesis:</strong> Enzymes are involved at various stages as amino acids are joined together according to the genetic code (at the ribosomes) to form specific polypeptide chains, which then fold into functional proteins.</li>
+                         <li><strong>Lipid Synthesis:</strong> Enzymes catalyse the reactions that join fatty acids and glycerol to form triglycerides (for energy storage) and phospholipids (for cell membranes).</li>
+                         <li><strong>DNA Replication/Transcription:</strong> Enzymes like DNA polymerase and RNA polymerase are fundamental to copying and reading genetic information.</li>
+                     </ul>
+                     <h4>Overall Significance</h4>
+                     <ul>
+                         <li>Without enzymes acting as catalysts, metabolic reactions would proceed far too slowly at the relatively low temperatures and neutral pH found within most organisms to sustain life.</li>
+                         <li>They allow precise control over metabolic pathways.</li>
+                         <li>Essential for: Energy release (respiration), nutrient absorption, muscle contraction, nerve impulse transmission, waste removal, defence against pathogens, growth, and repair.</li>
+                     </ul>
+                    <h4>Key Digestive Enzymes Summary Table</h4>
+                     <table class="content-table">
+                        <thead>
+                            <tr><th>Enzyme Type</th><th>Specific Example</th><th>Substrate</th><th>Product(s)</th><th>Location (Example)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Carbohydrase</td><td>Amylase</td><td>Starch</td><td>Maltose</td><td>Saliva, Pancreatic Juice</td></tr>
+                            <tr><td>Carbohydrase</td><td>Maltase</td><td>Maltose</td><td>Glucose</td><td>Small Intestine Lining</td></tr>
+                            <tr><td>Protease</td><td>Pepsin</td><td>Proteins</td><td>Polypeptides</td><td>Stomach</td></tr>
+                            <tr><td>Protease</td><td>Trypsin</td><td>Proteins/Polypeptides</td><td>Smaller Peptides/Amino Acids</td><td>Small Intestine (from Pancreas)</td></tr>
+                            <tr><td>Lipase</td><td>Pancreatic Lipase</td><td>Lipids (Fats)</td><td>Fatty Acids & Glycerol</td><td>Small Intestine (from Pancreas)</td></tr>
+                        </tbody>
+                     </table>
+                 </div>
+                 <h3 class="collapsible-header" onclick="toggleCollapse(this)">Relevant Video</h3>
+                 <div class="collapsible-content">
+                     <div class="video-container">
+                         <iframe src="https://www.youtube.com/embed/XTum5kfTL6E" title="Importance of Enzymes Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                     </div>
+                 </div>
+                 <h3 class="topic-quiz-header">Topic Quiz</h3>
+                 <button class="button start-quiz-button" onclick="startTopicQuiz('topic-1-12', this)">Start Topic 1.12 Quiz</button>
+                 <div class="quiz-container" id="quiz-topic-1-12">
+                     <div class="quiz-score"></div>
+                 </div>
+                 <button class="button back-button" onclick="showBiologyMainPage()">Back to Biology Topics</button>
+            </div>
+
+            <div id="biology-total-quiz-page">
+                 <h1>Total Biology Quiz</h1>
+                 <p class="instructions" id="total-quiz-instructions">Test your knowledge across all Biology topics covered. Answer one question at a time.</p>
+                 <div class="quiz-container" id="quiz-total-biology"></div>
+                 <div class="total-quiz-navigation">
+                     <button class="button back-button" id="total-quiz-prev" onclick="navigateTotalQuiz(-1)" style="visibility: hidden;">Previous</button>
+                     <button class="button" id="total-quiz-next" onclick="navigateTotalQuiz(1)">Next</button>
+                     <button class="button start-quiz-button" id="total-quiz-finish" onclick="submitTotalBiologyQuiz()" style="display: none;">Finish Quiz</button>
+                 </div>
+                 <div class="total-quiz-results" id="total-quiz-results-container"></div>
+                 <button class="button back-button" id="total-quiz-back-to-topics" onclick="showBiologyMainPage()" style="margin-top: 15px;">Back to Biology Topics</button>
+            </div>
+
+        </div> </main>
+
+    <footer class="footer">
+        <p class="disclaimer">
+            Disclaimer: Information provided on this site is intended to be accurate as of May 2025. Updates are unlikely. Always verify critical information with official sources.
+        </p>
+    </footer>
+
+    <script>
+        // ==================================================
+        // ===== JAVASCRIPT FOR kap5-biology.html ONLY =====
+        // ==================================================
+
+        // --- View Elements within Biology Page ---
+        const biologyViews = {
+            biologyMainPage: document.getElementById('biology-main-page'),
+            biologyTotalQuizPage: document.getElementById('biology-total-quiz-page'),
+        };
+        const biologyTopicContents = document.querySelectorAll('.biology-topic-content');
+
+        // Hides all biology-specific views
+        function hideAllBiologyViews() {
+            Object.values(biologyViews).forEach(view => { if(view) view.style.display = 'none'; });
+            biologyTopicContents.forEach(view => view.style.display = 'none');
+        }
+
+        // Shows the main Biology topic list page
+        function showBiologyMainPage() {
+            hideAllBiologyViews();
+
+            // --- START: Pause videos ---
+            const topicDivs = document.querySelectorAll('.biology-topic-content');
+            topicDivs.forEach(topicDiv => {
+                const iframes = topicDiv.querySelectorAll('iframe');
+                iframes.forEach(iframe => {
+                    if (iframe.src.includes('youtube.com') || iframe.src.includes('googleusercontent.com/youtube')) {
+                        const currentSrc = iframe.src;
+                        iframe.src = ''; // Clear src first
+                        iframe.src = currentSrc; // Re-assign src to stop/reset
+                    }
+                });
+            });
+            // --- END: Pause videos ---
+
+            if (biologyViews.biologyMainPage) {
+                 biologyViews.biologyMainPage.style.display = 'block';
+                 window.scrollTo(0, 0);
+            }
+        }
+
+
+        // Shows a specific Biology Topic content page
+        function showBiologyTopic(topicId) {
+            hideAllBiologyViews();
+            const topicView = document.getElementById(topicId);
+            if (topicView) {
+                topicView.style.display = 'block';
+                resetTopicQuiz(topicId);
+                topicView.querySelectorAll('.collapsible-content.collapsed').forEach(content => content.classList.remove('collapsed'));
+                topicView.querySelectorAll('.collapsible-header.collapsed').forEach(header => header.classList.remove('collapsed'));
+                window.scrollTo(0, 0);
+            } else {
+                console.error(`Biology topic view with ID ${topicId} not found.`);
+                showBiologyMainPage();
+            }
+        }
+
+        // Shows the slide-based Total Biology Quiz page
+        function showTotalBiologyQuiz() {
+            hideAllBiologyViews();
+            if (biologyViews.biologyTotalQuizPage) {
+                biologyViews.biologyTotalQuizPage.style.display = 'block';
+                initializeTotalBiologyQuiz();
+                window.scrollTo(0, 0);
+            } else {
+                 console.error("Total Biology Quiz page not found.");
+                 showBiologyMainPage();
+            }
+        }
+
+        // --- Collapsible Section Logic ---
+        function toggleCollapse(headerElement) {
+            const contentElement = headerElement.nextElementSibling;
+            if (contentElement && contentElement.classList.contains('collapsible-content')) {
+                 headerElement.classList.toggle('collapsed');
+                 contentElement.classList.toggle('collapsed');
+            } else {
+                 console.error("Collapsible content not found immediately after header:", headerElement);
+            }
+        }
+
+        // =====================================
+        // ========= QUIZ DATA STORE ===========
+        // =====================================
+        const biologyQuizzes = {
+            'topic-1-1': [ /* Eukaryotic/Prokaryotic */
+                { q: "Which structure controls entry and exit of substances in both animal and bacterial cells?", options: ["Nucleus", "Cell Wall", "Cell Membrane", "Ribosome"], correct: 2 },
+                { q: "Plasmids, small rings of DNA carrying extra genes, are typically found in:", options: ["Plant cells", "Animal cells", "All eukaryotic cells", "Bacterial cells"], correct: 3 },
+                { q: "Which organelle is the site of photosynthesis in plant cells?", options: ["Mitochondrion", "Chloroplast", "Ribosome", "Vacuole"], correct: 1 },
+                { q: "The cell wall of a plant cell is primarily made of:", options: ["Peptidoglycan", "Chitin", "Cellulose", "Protein"], correct: 2 }
+            ],
+            'topic-1-2': [ /* Specialised Cells */
+                { q: "Energy for sperm movement is primarily generated by:", options: ["Acrosome", "Nucleus", "Mitochondria", "Cytoplasm"], correct: 2 },
+                { q: "What prevents multiple sperm fertilising an egg?", options: ["Tail falling off", "Nutrient depletion", "Membrane changes after fertilisation", "Acrosome reaction"], correct: 2 },
+                { q: "Where are ciliated epithelial cells commonly found, playing a role in moving mucus?", options: ["Muscle tissue", "Lining the airways", "In the blood", "Covering the egg cell"], correct: 1 },
+                { q: "What term describes a nucleus containing only one set of chromosomes?", options: ["Diploid", "Polyploid", "Haploid", "Aploid"], correct: 2 }
+            ],
+            'topic-1-3': [ /* Microscopy */
+                { q: "Which microscope uses glass lenses and visible light?", options: ["Electron Microscope", "Light Microscope", "Scanning Probe Microscope", "X-ray Microscope"], correct: 1 },
+                { q: "What is the main advantage of electron microscopes regarding image detail?", options: ["Ability to view living cells", "Lower cost", "Much higher resolution", "Production of colour images"], correct: 2 },
+                { q: "A key limitation of electron microscopy is that:", options: ["It has low magnification", "Specimens must be dead and in a vacuum", "It uses visible light", "Images are always in colour"], correct: 1 },
+                { q: "The detailed structure of ribosomes within a cell was clearly visualized using:", options: ["The naked eye", "A hand lens", "A light microscope", "An electron microscope"], correct: 3 }
+            ],
+            'topic-1-4': [ /* Size, Scale, Estimation */
+                { q: "If a cell measures 50 $\mu m$ in diameter, what is this measurement in millimetres (mm)?", options: ["0.5 mm", "0.05 mm", "5 mm", "0.005 mm"], correct: 1 },
+                { q: "Estimation in microscopy is particularly useful for:", options: ["Getting exact measurements for publication", "Quickly checking if a calculation is reasonable or approximating difficult measures", "Staining cells accurately", "Focusing the image perfectly"], correct: 1 },
+                { q: "A scale bar on a diagram represents 10 $\mu m$ and measures 20 mm long on the paper. What is the magnification of the diagram?", options: ["$\\times 2$", "$\\times 200$", "$\\times 2000$", "$\\times 0.5$"], correct: 2 },
+                { q: "Why might a biologist estimate the size of mitochondria seen in an image?", options: ["They are too large to measure", "Their boundaries might be unclear or they want a quick check", "The microscope's light isn't working", "The stain makes them invisible"], correct: 1 }
+            ],
+            'topic-1-5': [ /* Units, Standard Form */
+                { q: "Which prefix represents one-billionth ($10^{-9}$)?", options: ["milli (m)", "micro ($\\mu$)", "pico (p)", "nano (n)"], correct: 3 },
+                { q: "Convert 3 micrometres ($\mu m$) into nanometres (nm).", options: ["0.003 nm", "300 nm", "3000 nm", "0.3 nm"], correct: 2 },
+                { q: "Express the number 0.0075 in standard form.", options: ["$7.5 \\times 10^3$", "$7.5 \\times 10^{-2}$", "$7.5 \\times 10^{-3}$", "$0.75 \\times 10^{-2}$"], correct: 2 },
+                { q: "Calculate $(5 \\times 10^4) \\div (2 \\times 10^{-2})$ and express the answer in standard form.", options: ["$2.5 \\times 10^6$", "$2.5 \\times 10^2$", "$3 \\times 10^6$", "$2.5 \\times 10^{-8}$"], correct: 0 }
+            ],
+            'topic-1-6': [ /* Core Practical: Microscopy */
+                { q: "When preparing a wet mount, why is the coverslip lowered gently at an angle?", options: ["To ensure the stain spreads evenly", "To prevent trapping air bubbles", "To flatten the specimen", "To stick the coverslip down"], correct: 1 },
+                { q: "Which part of the microscope is used for initial focusing at low power?", options: ["Fine focus knob", "Objective lens", "Coarse focus knob", "Eyepiece lens"], correct: 2 },
+                { q: "A student uses a $\\times 10$ eyepiece and a $\\times 20$ objective lens. What is the total magnification?", options: ["$\\times 10$", "$\\times 20$", "$\\times 30$", "$\\times 200$"], correct: 3 },
+                { q: "Which of the following is a rule for producing good scientific drawings?", options: ["Use shading for realism", "Use a blue pen for labels", "Draw label lines with a ruler pointing accurately", "Make the drawing as small as possible"], correct: 2 }
+            ],
+             'topic-1-7': [ /* Enzyme Mechanism */
+                 { q: "The region on an enzyme where the substrate binds is called the:", options: ["Catalytic converter", "Active site", "Binding pocket", "Substrate region"], correct: 1 },
+                 { q: "The 'Induced Fit' model proposes that the enzyme's active site:", options: ["Has a rigid shape matching the substrate", "Changes shape slightly upon substrate binding", "Is destroyed by the substrate", "Works only once"], correct: 1 },
+                 { q: "Enzyme specificity is due to the complementary shapes of the:", options: ["Enzyme and product", "Substrate and product", "Active site and substrate", "Nucleus and cytoplasm"], correct: 2 },
+                 { q: "What is formed temporarily when an enzyme binds to its substrate?", options: ["Denatured enzyme", "Product complex", "Enzyme-substrate complex", "Activated substrate"], correct: 2 }
+             ],
+            'topic-1-8': [ /* Denaturation */
+                { q: "What happens to an enzyme during denaturation?", options: ["It speeds up the reaction", "Its 3D shape, especially the active site, is irreversibly changed", "It binds more substrate", "It requires less energy"], correct: 1 },
+                { q: "Which factor is LEAST likely to cause enzyme denaturation?", options: ["Very high temperature", "Very low pH", "Optimal temperature", "Very high pH"], correct: 2 },
+                { q: "Denaturation prevents the enzyme from functioning because:", options: ["The substrate changes shape", "The active site shape changes and the substrate cannot bind", "The products inhibit the enzyme", "There is not enough energy"], correct: 1 },
+                { q: "The bonds primarily broken during heat denaturation are:", options: ["Strong peptide bonds", "Weak hydrogen and ionic bonds", "Strong covalent bonds", "Glycosidic bonds"], correct: 1 }
+            ],
+            'topic-1-9': [ /* Factors Affecting Enzymes */
+                { q: "Increasing substrate concentration generally increases reaction rate until:", options: ["The temperature drops", "The pH changes", "The enzyme denatures", "All active sites become saturated"], correct: 3 },
+                { q: "The temperature at which an enzyme exhibits maximum activity is called its:", options: ["Denaturation point", "Activation energy", "Optimum temperature", "Saturation point"], correct: 2 },
+                { q: "A change in pH away from the optimum affects enzyme activity primarily by altering:", options: ["Substrate concentration", "The enzyme's 3D structure and active site shape", "Kinetic energy", "Product concentration"], correct: 1 },
+                { q: "At very low temperatures, enzyme activity is low because:", options: ["The enzyme is denatured", "There is low kinetic energy and fewer collisions", "The pH is too low", "The substrate concentration is too high"], correct: 1 }
+            ],
+            'topic-1-10': [ /* Core Practical: pH */
+                { q: "In the amylase practical, buffer solutions are used to:", options: ["Provide starch", "Control the pH", "Keep the temperature constant", "Stain the enzyme"], correct: 1 },
+                { q: "The disappearance of starch is detected using:", options: ["Amylase solution", "Benedict's solution", "Iodine solution", "Buffer solution"], correct: 2 },
+                { q: "If the time taken for starch to disappear is 20 seconds, the calculated rate (as $1/Time$) is:", options: ["20 $s^{-1}$", "0.5 $s^{-1}$", "0.05 $s^{-1}$", "5 $s^{-1}$"], correct: 2 },
+                { q: "Which of these is a crucial variable to control using a water bath in this experiment?", options: ["pH", "Iodine concentration", "Temperature", "Time"], correct: 2 }
+            ],
+            'topic-1-11': [ /* Rate Calculations */
+                { q: "An enzyme produces 45g of product in 15 minutes. What is the rate in g/min?", options: ["0.33 g/min", "3 g/min", "15 g/min", "45 g/min"], correct: 1 },
+                { q: "In an enzyme experiment, the reaction endpoint was reached after 25 seconds. Calculate the rate in $s^{-1}$.", options: ["25 $s^{-1}$", "0.4 $s^{-1}$", "0.04 $s^{-1}$", "4 $s^{-1}$"], correct: 2 },
+                { q: "On a graph showing product concentration vs. time, the initial rate is represented by:", options: ["The height of the plateau", "The gradient of the tangent at t=0", "The time taken to finish", "The area under the graph"], correct: 1 },
+                { q: "If $Rate = \\frac{\\text{Change in Quantity}}{\\text{Time}}$, suitable units could be:", options: ["seconds", "$s^{-1}$", "g/min", "pH units"], correct: 2 }
+            ],
+             'topic-1-12': [ /* Importance of Enzymes */
+                { q: "Which type of enzyme is primarily involved in breaking down lipids?", options: ["Protease", "Carbohydrase", "Lipase", "Amylase"], correct: 2 },
+                { q: "The synthesis of large molecules like glycogen from smaller units like glucose is an example of:", options: ["Catabolism", "Denaturation", "Anabolism", "Digestion"], correct: 2 },
+                { q: "Proteases break down proteins into their building blocks, which are:", options: ["Fatty acids", "Simple sugars", "Glycerol", "Amino acids"], correct: 3 },
+                { q: "Why are enzymes crucial for digestion?", options: ["They provide energy", "They break down large, insoluble food molecules into small, soluble ones", "They build new tissues", "They transport nutrients"], correct: 1 }
+            ],
+
+            // Total Biology Quiz Data
+            'total-biology': [
+                 { q: "Which organelle, present in plant cells but not animal cells, performs photosynthesis?", options: ["Nucleus", "Mitochondrion", "Ribosome", "Chloroplast"], correct: 3 },
+                 { q: "Bacterial cells differ from eukaryotic cells because they lack:", options: ["Ribosomes", "A cell membrane", "A true nucleus", "Cytoplasm"], correct: 2 },
+                 { q: "The acrosome is an adaptation found in which specialised cell?", options: ["Egg cell", "Sperm cell", "Ciliated epithelial cell", "Red blood cell"], correct: 1 },
+                 { q: "Which statement best describes the advantage of electron microscopes?", options: ["They are cheap and portable", "They allow viewing of living cells in colour", "They offer much higher resolution for viewing ultrastructure", "They use simple glass lenses"], correct: 2 },
+                 { q: "Convert 500 micrometres ($\mu m$) to millimetres (mm).", options: ["5 mm", "0.5 mm", "50 mm", "0.05 mm"], correct: 1 },
+                 { q: "If total magnification is $\\times 400$ and the eyepiece lens is $\\times 10$, what is the objective lens magnification?", options: ["$\\times 4$", "$\\times 40$", "$\\times 390$", "$\\times 4000$"], correct: 1 },
+                 { q: "The 'Induced Fit' model describes the interaction between:", options: ["Nucleus and cytoplasm", "Enzyme active site and substrate", "Mitochondria and ATP", "Cell wall and cell membrane"], correct: 1 },
+                 { q: "High temperatures cause enzymes to lose function primarily by:", options: ["Increasing substrate concentration", "Breaking weak bonds and changing active site shape", "Decreasing kinetic energy", "Removing products"], correct: 1 },
+                 { q: "What is the typical shape of a graph plotting enzyme reaction rate against pH?", options: ["Straight line increasing", "Straight line decreasing", "S-shaped curve", "Bell-shaped curve"], correct: 3 },
+                 { q: "In the amylase-starch practical, what indicates that the reaction is complete?", options: ["The mixture turns blue-black", "The iodine solution remains orange-brown", "Bubbles stop forming", "The temperature increases"], correct: 1 },
+                 { q: "If an enzyme reaction takes 2 minutes (120 seconds) to complete, what is the rate in $s^{-1}$?", options: ["0.5 $s^{-1}$", "2 $s^{-1}$", "0.0083 $s^{-1}$", "120 $s^{-1}$"], correct: 2 },
+                 { q: "Lipase is an enzyme that breaks down:", options: ["Proteins", "Starch", "Lipids", "Cellulose"], correct: 2 },
+                 { q: "Which process involves enzymes building larger molecules from smaller ones?", options: ["Digestion", "Catabolism", "Denaturation", "Synthesis (Anabolism)"], correct: 3 },
+                 { q: "What provides the energy for the movement of cilia and flagella?", options: ["Nucleus", "Ribosomes", "Mitochondria", "Vacuole"], correct: 2 },
+                 { q: "Which unit is smallest?", options: ["millimetre (mm)", "micrometre ($\\mu m$)", "picometre (pm)", "nanometre (nm)"], correct: 2 }
+            ]
+        };
+
+        // =====================================
+        // ========= TOPIC QUIZ LOGIC ==========
+        // =====================================
+        let topicUserAnswers = {};
+
+        function startTopicQuiz(topicId, startButtonElement) {
+            const quizContainer = document.getElementById(`quiz-${topicId}`);
+            const quizData = biologyQuizzes[topicId];
+            if (!quizData || !quizContainer) return;
+            startButtonElement.style.display = 'none';
+            const scoreDiv = quizContainer.querySelector('.quiz-score');
+            quizContainer.innerHTML = '';
+            quizContainer.appendChild(scoreDiv);
+            scoreDiv.innerHTML = '';
+            topicUserAnswers = {};
+            let quizHTML = '';
+            quizData.forEach((q, index) => {
+                quizHTML += `<div class="quiz-question">${index + 1}. ${q.q}</div>`;
+                quizHTML += `<div class="quiz-options" data-topic="${topicId}" data-question="${index}">`;
+                q.options.forEach((option, optionIndex) => {
+                    quizHTML += `<button onclick="selectTopicAnswer(this, ${index}, ${optionIndex}, '${topicId}')">${option}</button>`;
+                });
+                quizHTML += `</div><div class="quiz-feedback" id="feedback-${topicId}-${index}"></div>`;
+            });
+            quizHTML += `<button class="button" style="margin-top: 20px;" onclick="submitTopicQuiz('${topicId}')">Submit Quiz</button>`;
+            scoreDiv.insertAdjacentHTML('beforebegin', quizHTML);
+            MathJax.typesetPromise([quizContainer]); // **ADDED: Typeset new quiz content**
+        }
+
+        function resetTopicQuiz(topicId) {
+            const quizContainer = document.getElementById(`quiz-${topicId}`);
+            const topicContentDiv = document.getElementById(topicId);
+            const startButton = topicContentDiv ? topicContentDiv.querySelector('.start-quiz-button') : null;
+            if (quizContainer) {
+                quizContainer.innerHTML = '<div class="quiz-score"></div>';
+            }
+            if (startButton) {
+                startButton.style.display = 'block';
+                startButton.disabled = false;
+            }
+            topicUserAnswers = {};
+        }
+
+        function selectTopicAnswer(buttonElement, questionIndex, optionIndex, topicId) {
+            const optionsContainer = buttonElement.parentElement;
+            optionsContainer.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
+            buttonElement.classList.add('selected');
+            topicUserAnswers[`${topicId}_${questionIndex}`] = optionIndex;
+        }
+
+        function submitTopicQuiz(topicId) {
+            const quizData = biologyQuizzes[topicId];
+            if (!quizData) return;
+            let score = 0;
+            quizData.forEach((q, index) => {
+                const feedbackElement = document.getElementById(`feedback-${topicId}-${index}`);
+                const selectedOptionIndex = topicUserAnswers[`${topicId}_${index}`];
+                const optionsContainer = document.querySelector(`#quiz-${topicId} .quiz-options[data-question="${index}"]`);
+                if (optionsContainer && feedbackElement) {
+                    const optionButtons = optionsContainer.querySelectorAll('button');
+                    optionButtons.forEach(btn => btn.disabled = true);
+                    if (selectedOptionIndex !== undefined) {
+                        const isCorrect = selectedOptionIndex === q.correct;
+                        if (isCorrect) {
+                            score++;
+                            feedbackElement.textContent = "Correct!";
+                            feedbackElement.className = 'quiz-feedback correct';
+                            optionButtons[selectedOptionIndex].classList.add('correct');
+                        } else {
+                            feedbackElement.textContent = `Incorrect. Correct answer: ${q.options[q.correct]}`;
+                            feedbackElement.className = 'quiz-feedback incorrect';
+                            optionButtons[selectedOptionIndex].classList.add('incorrect');
+                            if (q.correct < optionButtons.length) optionButtons[q.correct].classList.add('correct');
+                        }
+                    } else {
+                        feedbackElement.textContent = `Not answered. Correct answer: ${q.options[q.correct]}`;
+                        feedbackElement.className = 'quiz-feedback incorrect';
+                        if (q.correct < optionButtons.length) optionButtons[q.correct].classList.add('correct');
+                    }
+                }
+            });
+            const scoreElement = document.querySelector(`#quiz-${topicId} .quiz-score`);
+            if (scoreElement) scoreElement.textContent = `Your Score: ${score} / ${quizData.length}`;
+            const submitButton = document.querySelector(`#quiz-${topicId} button[onclick^="submitTopicQuiz"]`);
+            if (submitButton) submitButton.disabled = true;
+            MathJax.typesetPromise([scoreElement.parentElement]); // **ADDED: Typeset feedback**
+        }
+
+        // =====================================
+        // ===== TOTAL QUIZ (SLIDE) LOGIC ======
+        // =====================================
+        let totalQuizAnswers = {};
+        let currentTotalQuizQuestionIndex = 0;
+        const totalQuizData = biologyQuizzes['total-biology'] || [];
+
+        const totalQuizContainer = document.getElementById('quiz-total-biology');
+        const totalQuizResultsContainer = document.getElementById('total-quiz-results-container');
+        const totalQuizInstructions = document.getElementById('total-quiz-instructions');
+        const totalQuizNav = document.querySelector('.total-quiz-navigation');
+        const totalQuizPrevBtn = document.getElementById('total-quiz-prev');
+        const totalQuizNextBtn = document.getElementById('total-quiz-next');
+        const totalQuizFinishBtn = document.getElementById('total-quiz-finish');
+        const totalQuizBackToTopicsBtn = document.getElementById('total-quiz-back-to-topics');
+
+        function initializeTotalBiologyQuiz() {
+            currentTotalQuizQuestionIndex = 0;
+            totalQuizAnswers = {};
+            if(totalQuizResultsContainer) totalQuizResultsContainer.innerHTML = '';
+            if(totalQuizInstructions) totalQuizInstructions.style.display = 'block';
+            if(totalQuizNav) totalQuizNav.style.display = 'flex';
+            if(totalQuizContainer) totalQuizContainer.innerHTML = '';
+            if(totalQuizBackToTopicsBtn) totalQuizBackToTopicsBtn.style.display = 'block';
+
+            loadTotalQuizQuestion(currentTotalQuizQuestionIndex);
+            updateTotalQuizNavButtons();
+        }
+
+        function loadTotalQuizQuestion(index) {
+            if (!totalQuizContainer || index < 0 || index >= totalQuizData.length) return;
+            const q = totalQuizData[index];
+            let quizHTML = `<div class="quiz-question-slide active" data-question-index="${index}">`;
+            quizHTML += `<div class="quiz-question">(${index + 1}/${totalQuizData.length}) ${q.q}</div>`;
+            quizHTML += `<div class="quiz-options" data-topic="total-biology" data-question="${index}">`;
+            q.options.forEach((option, optionIndex) => {
+                const isSelected = totalQuizAnswers[index] === optionIndex;
+                quizHTML += `<button class="${isSelected ? 'selected' : ''}" onclick="selectTotalQuizAnswer(this, ${index}, ${optionIndex})">${option}</button>`;
+            });
+            quizHTML += `</div></div>`;
+            totalQuizContainer.innerHTML = quizHTML;
+            MathJax.typesetPromise([totalQuizContainer]); // **ADDED: Typeset total quiz question**
+        }
+
+        function selectTotalQuizAnswer(buttonElement, questionIndex, optionIndex) {
+            const optionsContainer = buttonElement.parentElement;
+            optionsContainer.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
+            buttonElement.classList.add('selected');
+            totalQuizAnswers[questionIndex] = optionIndex;
+        }
+
+        function navigateTotalQuiz(direction) {
+            const newIndex = currentTotalQuizQuestionIndex + direction;
+            if (newIndex >= 0 && newIndex < totalQuizData.length) {
+                currentTotalQuizQuestionIndex = newIndex;
+                loadTotalQuizQuestion(currentTotalQuizQuestionIndex);
+                updateTotalQuizNavButtons();
+            }
+        }
+
+        function updateTotalQuizNavButtons() {
+            if (!totalQuizPrevBtn || !totalQuizNextBtn || !totalQuizFinishBtn) return;
+            totalQuizPrevBtn.style.visibility = (currentTotalQuizQuestionIndex === 0) ? 'hidden' : 'visible';
+            totalQuizNextBtn.style.display = (currentTotalQuizQuestionIndex === totalQuizData.length - 1) ? 'none' : 'inline-block';
+            totalQuizFinishBtn.style.display = (currentTotalQuizQuestionIndex === totalQuizData.length - 1) ? 'inline-block' : 'none';
+        }
+
+        function submitTotalBiologyQuiz() {
+            let score = 0;
+            let resultsHTML = '<h2>Quiz Results:</h2>';
+            totalQuizData.forEach((q, index) => {
+                 const selectedOptionIndex = totalQuizAnswers[index];
+                 const isCorrect = selectedOptionIndex === q.correct;
+                 if (isCorrect) score++;
+                 resultsHTML += `<p><strong>Q${index + 1}: ${q.q}</strong><br/>`;
+                 if (selectedOptionIndex !== undefined) {
+                     resultsHTML += `Your answer: ${q.options[selectedOptionIndex]} - `;
+                     resultsHTML += isCorrect ? '<span class="correct">Correct</span>' : `<span class="incorrect">Incorrect</span>`;
+                 } else {
+                     resultsHTML += `<span class="incorrect">Not answered</span>`;
+                 }
+                 if (!isCorrect) resultsHTML += `<br/><em>Correct answer: ${q.options[q.correct]}</em>`;
+                 resultsHTML += `</p><hr>`;
+            });
+            resultsHTML = `<h2>Final Score: ${score} / ${totalQuizData.length}</h2><br/>` + resultsHTML;
+            if(totalQuizContainer) totalQuizContainer.innerHTML = '';
+            if(totalQuizNav) totalQuizNav.style.display = 'none';
+            if(totalQuizInstructions) totalQuizInstructions.style.display = 'none';
+            if(totalQuizResultsContainer) {
+                totalQuizResultsContainer.innerHTML = resultsHTML;
+                MathJax.typesetPromise([totalQuizResultsContainer]); // **ADDED: Typeset results**
+            }
+            if(totalQuizBackToTopicsBtn) totalQuizBackToTopicsBtn.style.display = 'block';
+        }
+
+        // --- Initial Page Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            showBiologyMainPage(); // Show the main biology page by default
+        });
+    </script>
+
+</body>
+</html>

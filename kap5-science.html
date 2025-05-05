@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAP Revision Hub - Home</title>
+    <title>KAP5 Science - Revision Hub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
 
     <style>
         /* --- Basic Reset & Body Styling --- */
@@ -19,7 +18,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between; /* Push footer down */
+            justify-content: center; /* Center content vertically */
             min-height: 100vh;
             padding: 20px;
             color: #ffffff;
@@ -29,11 +28,6 @@
         main {
             width: 100%;
             max-width: 700px; /* Standard width for menus */
-            margin: auto; /* Center vertically and horizontally */
-            flex-grow: 1; /* Allow main to take space */
-            display: flex; /* Use flex to center container */
-            align-items: center; /* Center container vertically */
-            justify-content: center; /* Center container horizontally */
         }
 
         /* --- Content Container Styling --- */
@@ -45,7 +39,7 @@
             text-align: center;
             width: 100%;
             border: 1px solid #333;
-            /* Removed margin-top as main handles centering */
+            margin-top: 20px;
         }
 
         /* --- Headings --- */
@@ -55,11 +49,11 @@
         p.instructions { color: #e0e0e0; margin-bottom: 30px; font-size: 1.1em; line-height: 1.6; }
 
         /* --- Menu Styling --- */
-        .main-menu ul { list-style: none; padding: 0; } /* Reset padding */
-        .main-menu li { margin-bottom: 15px; }
-        .main-menu li:last-child { margin-bottom: 0; }
+        .science-submenu ul { list-style: none; }
+        .science-submenu li { margin-bottom: 15px; }
+        .science-submenu li:last-child { margin-bottom: 0; }
 
-        /* --- Button Styling (Applied to <a> tags now) --- */
+        /* --- Button Styling --- */
         .button {
             display: block; background-color: #8B0000; color: #ffffff; padding: 14px 20px;
             text-decoration: none; border-radius: 10px; font-size: 1.05em;
@@ -69,23 +63,13 @@
         .button:hover { background-color: #A40000; transform: translateY(-3px); box-shadow: 0 6px 12px rgba(164, 0, 0, 0.4); }
         .button:active { transform: translateY(-1px); background-color: #650000; box-shadow: 0 3px 6px rgba(164, 0, 0, 0.3); }
 
-        /* Disabled Button */
-        .disabled-level {
-            display: block; background-color: #3a3a3a; color: #777; padding: 14px 20px; border-radius: 10px;
-            font-size: 1.05em; font-weight: 600; width: 100%; text-align: center; text-decoration: line-through;
-            cursor: not-allowed; font-family: 'Permanent Marker', cursive; transform: rotate(-1deg); border: 1px dashed #555;
-        }
+        /* Back Button */
+        .back-button { background-color: #444; margin-top: 30px; }
+        .back-button:hover { background-color: #555; box-shadow: 0 4px 8px rgba(85, 85, 85, 0.3); }
+        .back-button:active { background-color: #333; box-shadow: 0 2px 4px rgba(85, 85, 85, 0.2); }
 
         /* --- Footer --- */
-        .footer {
-             /* Removed margin-top: auto; as main handles centering */
-             padding-top: 20px; /* Add some space above footer */
-             text-align: center;
-             width: 100%;
-             max-width: 700px;
-             margin-left: auto; /* Center footer */
-             margin-right: auto; /* Center footer */
-        }
+        .footer { margin-top: 30px; text-align: center; width: 100%; max-width: 700px; }
         .disclaimer { font-size: 0.85em; color: #aaa; line-height: 1.5; }
 
         /* --- Responsive Adjustments --- */
@@ -93,7 +77,7 @@
             .container { padding: 25px 20px; }
             h1 { font-size: 1.7em; }
             p.instructions { font-size: 1em; margin-bottom: 25px; }
-            .button, .disabled-level { padding: 12px 18px; font-size: 1em; }
+            .button { padding: 12px 18px; font-size: 1em; }
             .disclaimer { font-size: 0.8em; }
         }
     </style>
@@ -103,28 +87,28 @@
     <main>
         <div class="container">
 
-            <div id="homepage">
-                <h1>Welcome to the KAP Revision Hub</h1>
-                <p class="instructions">Please select your test level to find relevant resources:</p>
-                <nav class="main-menu">
+            <div id="kap5-science-menu"> <h1>KAP5 Science</h1>
+                <p class="instructions">Select a science discipline:</p>
+                <nav class="science-submenu">
                     <ul>
-                        <li><a href="kap5-subjects.html" class="button">KAP5</a></li>
-                        <li><span class="disabled-level">KAP2 (Unavailable)</span></li>
-                        </ul>
+                        <li><a href="kap5-biology.html" class="button">Biology</a></li>
+                        <li><a href="kap5-chemistry.html" class="button">Chemistry</a></li> <li><a href="kap5-physics.html" class="button">Physics</a></li>   </ul>
                 </nav>
+                 <a href="index.html" class="button back-button">Back to Subjects</a>
             </div>
 
         </div> </main>
 
     <footer class="footer">
         <p class="disclaimer">
-            Disclaimer: Information provided on this site is intended to be accurate as of May 2025. Updates are unlikely. Always verify critical information with official sources.
+            Disclaimer: Information provided on this site is intended to be accurate as of May 2025. Updates are unlikely. Always verify critical information with official sources. 
         </p>
     </footer>
 
     <script>
+        // Minimal JS if any needed in future
         document.addEventListener('DOMContentLoaded', () => {
-            // Page is ready, homepage is displayed by default HTML/CSS
+            // Page is ready
         });
     </script>
 
