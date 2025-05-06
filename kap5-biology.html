@@ -22,26 +22,113 @@
     <script type="text/javascript" id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
     </script>
+
     <style>
+        /* --- CSS Variables for Theming --- */
+        :root {
+            /* Dark Mode (Default) */
+            --bg-color: #0F0F0F;
+            --container-bg: #1C1C1C;
+            --text-color: #ffffff;
+            --text-muted-color: #aaa;
+            --heading-color: #ffffff;
+            --sub-heading-color: #eee;
+            --link-color: #60a5fa;
+            --border-color: #333;
+            --table-border-color: #555;
+            --table-header-bg: #383838;
+            --table-row-even-bg: #2f2f2f;
+            --table-row-hover-bg: #404040;
+            --button-primary-bg: #8B0000;
+            --button-primary-hover-bg: #A40000;
+            --button-primary-active-bg: #650000;
+            --button-primary-shadow: rgba(164, 0, 0, 0.4);
+            --button-secondary-bg: #444;
+            --button-secondary-hover-bg: #555;
+            --button-secondary-active-bg: #333;
+            --button-secondary-shadow: rgba(85, 85, 85, 0.3);
+            --button-quiz-start-bg: #B22222; /* Firebrick - Dark mode quiz button */
+            --button-quiz-start-hover-bg: #CD5C5C; /* IndianRed - Dark mode quiz button hover */
+            --button-quiz-start-shadow: rgba(178, 34, 34, 0.3);
+            --button-total-quiz-bg: #DC143C; /* Crimson - Dark mode total quiz button */
+            --button-total-quiz-hover-bg: #FF6347; /* Tomato - Dark mode total quiz hover */
+            --quiz-option-bg: #333;
+            --quiz-option-border: #555;
+            --quiz-feedback-correct-bg: rgba(40, 167, 69, 0.2);
+            --quiz-feedback-correct-text: #a3d9b1;
+            --quiz-feedback-correct-border: rgba(40, 167, 69, 0.5);
+            --quiz-feedback-incorrect-bg: rgba(220, 53, 69, 0.2);
+            --quiz-feedback-incorrect-text: #f1b0b7;
+            --quiz-feedback-incorrect-border: rgba(220, 53, 69, 0.5);
+            --theme-toggle-bg: #444;
+            --theme-toggle-slider: #ccc;
+            --theme-toggle-sun: #f39c12; /* Emoji color for sun */
+            --theme-toggle-moon: #f1c40f; /* Emoji color for moon */
+            --button-disabled-bg: #404040;
+            --button-disabled-text: #707070;
+            --button-disabled-cursor: not-allowed;
+        }
+
+        html[data-theme='light'] {
+            --bg-color: #f0f4f8; /* Light bluish grey */
+            --container-bg: #ffffff;
+            --text-color: #1e293b; /* Dark slate */
+            --text-muted-color: #64748b; /* Slate */
+            --heading-color: #A40000; /* Main Red for headings */
+            --sub-heading-color: #c00000; /* Darker Red */
+            --link-color: #8B0000; /* Dark Red for links */
+            --border-color: #cbd5e1; /* Light slate border */
+            --table-border-color: #e2e8f0;
+            --table-header-bg: #A40000; /* Main Red */
+            --table-row-even-bg: #f8f9fa; /* Very light grey */
+            --table-row-hover-bg: #e9ecef; /* Light grey */
+            --button-primary-bg: #A40000; /* Main Red */
+            --button-primary-hover-bg: #8B0000; /* Darker Red */
+            --button-primary-active-bg: #650000; /* Even Darker Red */
+            --button-primary-shadow: rgba(164, 0, 0, 0.2);
+            --button-secondary-bg: #6c757d; /* Grey */
+            --button-secondary-hover-bg: #5a6268;
+            --button-secondary-active-bg: #545b62;
+            --button-secondary-shadow: rgba(108, 117, 125, 0.2);
+            --button-quiz-start-bg: #A40000; /* Main Red */
+            --button-quiz-start-hover-bg: #8B0000;
+            --button-quiz-start-shadow: rgba(164, 0, 0, 0.2);
+            --button-total-quiz-bg: #c00000; /* Darker Red */
+            --button-total-quiz-hover-bg: #A40000;
+            --quiz-option-bg: #e9ecef;
+            --quiz-option-border: #ced4da;
+            --quiz-feedback-correct-bg: rgba(40, 167, 69, 0.1);
+            --quiz-feedback-correct-text: #155724;
+            --quiz-feedback-correct-border: rgba(40, 167, 69, 0.3);
+            --quiz-feedback-incorrect-bg: rgba(220, 53, 69, 0.1);
+            --quiz-feedback-incorrect-text: #721c24;
+            --quiz-feedback-incorrect-border: rgba(220, 53, 69, 0.3);
+            --theme-toggle-bg: #A40000;
+            --theme-toggle-slider: #fff;
+            --button-disabled-bg: #d0d0d0;
+            --button-disabled-text: #808080;
+        }
+
         /* --- Basic Reset & Body Styling --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { height: 100%; scroll-behavior: smooth; } /* Add smooth scroll */
+        html, body { height: 100%; scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0F0F0F;
+            background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
             min-height: 100vh;
             padding: 20px;
-            color: #ffffff;
+            color: var(--text-color);
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
         }
 
         /* --- Main Content Area --- */
         main {
             width: 100%;
-            max-width: 900px; /* Wider for tables */
+            max-width: 900px;
             margin-bottom: auto;
             display: flex;
             justify-content: center;
@@ -52,30 +139,31 @@
 
         /* --- Content Container Styling --- */
         .container {
-            background-color: #1C1C1C;
+            background-color: var(--container-bg);
             padding: 30px 40px;
             border-radius: 16px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             text-align: center;
             width: 100%;
-            border: 1px solid #333;
+            border: 1px solid var(--border-color);
             position: relative;
+            transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
         }
 
         /* --- View Management (for this page only) --- */
         #biology-main-page,
         .biology-topic-content,
         #biology-total-quiz-page {
-            display: none; /* Hide all specific biology views initially */
+            display: none;
         }
 
         /* --- Headings --- */
-        h1 { color: #ffffff; margin-bottom: 15px; font-size: 2.1em; font-weight: 700; }
-        h2 { color: #eee; margin-top: 10px; margin-bottom: 20px; font-size: 1.7em; font-weight: 600; text-align: left; border-bottom: 2px solid #A40000; padding-bottom: 5px;}
-        /* Collapsible Section Heading */
+        h1, h2, h3, h4 { transition: color 0.3s ease-in-out; }
+        h1 { color: var(--heading-color); margin-bottom: 15px; font-size: 2.1em; font-weight: 700; }
+        h2 { color: var(--sub-heading-color); margin-top: 10px; margin-bottom: 20px; font-size: 1.7em; font-weight: 600; text-align: left; border-bottom: 2px solid var(--button-primary-hover-bg); padding-bottom: 5px;}
         h3.collapsible-header {
-            color: #ffffff; margin-top: 25px; margin-bottom: 10px; font-size: 1.3em;
-            border-bottom: 1px solid #444; padding-bottom: 8px; text-align: left;
+            color: var(--heading-color); margin-top: 25px; margin-bottom: 10px; font-size: 1.3em;
+            border-bottom: 1px solid var(--border-color); padding-bottom: 8px; text-align: left;
             cursor: pointer; position: relative; padding-right: 25px;
             user-select: none;
         }
@@ -84,50 +172,38 @@
             font-size: 0.8em; transition: transform 0.2s ease-in-out;
         }
         h3.collapsible-header.collapsed::after { transform: translateY(-50%) rotate(-90deg); }
-        /* Sub-headings within notes */
-        .revision-notes h4 { color: #e0e0e0; font-size: 1.15em; margin-top: 15px; margin-bottom: 8px; text-align: left; font-weight: 600;}
+        .revision-notes h4 { color: var(--sub-heading-color); font-size: 1.15em; margin-top: 15px; margin-bottom: 8px; text-align: left; font-weight: 600;}
 
         /* --- Paragraphs & Lists --- */
-        p.instructions { color: #e0e0e0; margin-bottom: 30px; font-size: 1.1em; line-height: 1.6; text-align: center; }
+        p, li { transition: color 0.3s ease-in-out; }
+        p.instructions { color: var(--text-muted-color); margin-bottom: 30px; font-size: 1.1em; line-height: 1.6; text-align: center; }
         .biology-topic-content p { margin-bottom: 15px; font-size: 1em; text-align: left; line-height: 1.6;}
         .biology-topic-content ul, .biology-topic-content ol { margin-bottom: 15px; margin-left: 25px; text-align: left;}
         .biology-topic-content li { margin-bottom: 8px; line-height: 1.5; }
-        .biology-topic-content a { color: #60a5fa; text-decoration: none; }
+        .biology-topic-content a { color: var(--link-color); text-decoration: none; transition: color 0.3s ease-in-out; }
         .biology-topic-content a:hover { text-decoration: underline; }
-        /* Style for notes to be copy-friendly */
-        .revision-notes ul { padding-left: 20px; list-style-type: disc; } /* Ensure bullets visible */
-        .revision-notes ol { padding-left: 25px; list-style-type: decimal; } /* Ensure numbers visible */
+        .revision-notes ul { padding-left: 20px; list-style-type: disc; }
+        .revision-notes ol { padding-left: 25px; list-style-type: decimal; }
         .revision-notes li { margin-bottom: 10px; }
-        .revision-notes strong { color: #a5d6ff; font-weight: 600; } /* Highlight keywords */
+        .revision-notes strong { color: var(--button-primary-hover-bg); font-weight: 600; transition: color 0.3s ease-in-out; }
 
         /* --- Table Styling --- */
         .content-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 0.95em;
-            text-align: left;
-            color: #ccc; /* Lighter text for tables */
-            background-color: #252525; /* Slightly lighter dark background for table */
+            width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95em;
+            text-align: left; color: var(--text-color); background-color: var(--container-bg);
+            transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
         }
         .content-table th, .content-table td {
-            border: 1px solid #555; /* Slightly lighter border */
-            padding: 10px 12px; /* Increased padding */
-            vertical-align: top; /* Align text top */
+            border: 1px solid var(--table-border-color); padding: 10px 12px; vertical-align: top;
+            transition: border-color 0.3s ease-in-out;
         }
         .content-table thead th {
-            background-color: #383838; /* Darker header */
-            color: #ffffff;
-            font-weight: 600;
-            position: sticky; /* Make header sticky if table scrolls */
-            top: 0;
+            background-color: var(--table-header-bg); color: #ffffff; font-weight: 600;
+            position: sticky; top: 0;
+            transition: background-color 0.3s ease-in-out;
         }
-        .content-table tbody tr:nth-child(even) {
-            background-color: #2f2f2f; /* Subtle striping */
-        }
-        .content-table tbody tr:hover {
-            background-color: #404040; /* Hover effect */
-        }
+        .content-table tbody tr:nth-child(even) { background-color: var(--table-row-even-bg); transition: background-color 0.3s ease-in-out;}
+        .content-table tbody tr:hover { background-color: var(--table-row-hover-bg); transition: background-color 0.3s ease-in-out;}
 
         /* --- Menu Styling --- */
         .biology-topic-grid {
@@ -135,89 +211,143 @@
             gap: 15px; list-style: none; padding: 0; margin-top: 20px;
         }
         .biology-topic-grid li { margin-bottom: 0; }
-        .biology-topic-grid .button { height: 100%; display: flex; align-items: center; justify-content: center; padding: 16px 10px;} /* Center text vertically, adjust padding */
+        .biology-topic-grid .button { height: 100%; display: flex; align-items: center; justify-content: center; padding: 16px 10px;}
 
         /* --- Button Styling --- */
         .button {
-            display: block; background-color: #8B0000; color: #ffffff; padding: 14px 20px;
+            display: block; background-color: var(--button-primary-bg); color: #ffffff; padding: 14px 20px;
             text-decoration: none; border-radius: 10px; font-size: 1.05em;
-            font-weight: 600; transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+            font-weight: 600; transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease, color 0.3s ease-in-out;
             border: 1px solid transparent; cursor: pointer; width: 100%; text-align: center;
         }
-        .button:hover { background-color: #A40000; transform: translateY(-3px); box-shadow: 0 6px 12px rgba(164, 0, 0, 0.4); }
-        .button:active { transform: translateY(-1px); background-color: #650000; box-shadow: 0 3px 6px rgba(164, 0, 0, 0.3); }
+        .button:hover { background-color: var(--button-primary-hover-bg); transform: translateY(-3px); box-shadow: 0 6px 12px var(--button-primary-shadow); }
+        .button:active { transform: translateY(-1px); background-color: var(--button-primary-active-bg); box-shadow: 0 3px 6px var(--button-primary-shadow); }
 
-        /* Back Button */
-        .back-button { background-color: #444; margin-top: 30px; }
-        .back-button:hover { background-color: #555; box-shadow: 0 4px 8px rgba(85, 85, 85, 0.3); }
-        .back-button:active { background-color: #333; box-shadow: 0 2px 4px rgba(85, 85, 85, 0.2); }
+        .back-button { background-color: var(--button-secondary-bg); }
+        .back-button:hover { background-color: var(--button-secondary-hover-bg); box-shadow: 0 4px 8px var(--button-secondary-shadow); }
+        .back-button:active { background-color: var(--button-secondary-active-bg); }
 
-        /* Start Quiz / Topic Quiz Buttons */
-        .start-quiz-button { background-color: #3b82f6; margin-top: 15px; }
-        .start-quiz-button:hover { background-color: #2563eb; box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3); }
-        .start-quiz-button:active { background-color: #1d4ed8; box-shadow: 0 3px 6px rgba(59, 130, 246, 0.2); }
-        .topic-quiz-header { /* Header for the quiz section */
-             color: #ffffff; margin-top: 25px; margin-bottom: 10px; font-size: 1.3em;
-             border-bottom: 1px solid #444; padding-bottom: 8px; text-align: left;
+        .start-quiz-button {
+            background-color: var(--button-quiz-start-bg);
+            margin-top: 15px; /* Reverted to original spacing */
+        }
+        .start-quiz-button:hover { background-color: var(--button-quiz-start-hover-bg); box-shadow: 0 6px 12px var(--button-quiz-start-shadow); }
+
+        .button.total-quiz-main-btn {
+            background-color: var(--button-total-quiz-bg);
+            margin-top: 25px;
+            margin-bottom: 15px; /* Added bottom margin for spacing */
+        }
+        .button.total-quiz-main-btn:hover { background-color: var(--button-total-quiz-hover-bg); }
+
+        .button.quiz-disabled-initial {
+            background-color: var(--button-disabled-bg) !important;
+            color: var(--button-disabled-text) !important;
+            cursor: var(--button-disabled-cursor) !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+        .button.quiz-disabled-initial:hover {
+             background-color: var(--button-disabled-bg) !important;
         }
 
-        /* PDF Button */
         .pdf-button {
-            position: absolute; top: 15px; right: 15px; background-color: #555; color: #ddd; padding: 5px 10px;
-            font-size: 0.8em; border-radius: 5px; text-decoration: none; cursor: pointer; border: 1px solid #666;
-            transition: background-color 0.2s ease; z-index: 10;
+            position: absolute; top: 15px; right: 15px; background-color: var(--button-secondary-bg); color: var(--text-color); padding: 5px 10px;
+            font-size: 0.8em; border-radius: 5px; text-decoration: none; cursor: pointer; border: 1px solid var(--border-color);
+            transition: background-color 0.2s ease, color 0.3s ease-in-out, border-color 0.3s ease-in-out; z-index: 10;
         }
-        .pdf-button:hover { background-color: #666; }
+        .pdf-button:hover { background-color: var(--button-secondary-hover-bg); }
 
-        /* --- Collapsible Content Styling (Notes & Video Only) --- */
         .collapsible-content {
             overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-            max-height: 3000px; /* Increased max-height */ padding: 10px 0; text-align: left;
+            max-height: 3000px; padding: 10px 0; text-align: left;
         }
         .collapsible-content.collapsed { max-height: 0; padding-top: 0; padding-bottom: 0; }
 
-        /* --- YouTube Video Embed Styling --- */
         .video-container {
             position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
             max-width: 100%; background: #000; margin: 10px 0 20px 0; border-radius: 8px;
         }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        /* --- Topic Quiz Styling --- */
-         .topic-quiz-section { margin-top: 15px; border-top: 1px solid #444; padding-top: 15px; }
-         .quiz-container { margin-top: 15px; } /* Container for questions */
-         .quiz-question { margin-bottom: 15px; font-weight: 600; color: #fff; text-align: left;}
+         .topic-quiz-section { margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px; transition: border-color 0.3s ease-in-out;}
+         .quiz-container { margin-top: 15px; }
+         .quiz-question { margin-bottom: 15px; font-weight: 600; color: var(--text-color); text-align: left; transition: color 0.3s ease-in-out;}
          .quiz-options button {
              display: block; width: 100%; text-align: left; padding: 10px 15px; margin-bottom: 8px;
-             background-color: #333; border: 1px solid #555; color: #eee; border-radius: 8px;
-             cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease;
+             background-color: var(--quiz-option-bg); border: 1px solid var(--quiz-option-border); color: var(--text-color); border-radius: 8px;
+             cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease, color 0.3s ease-in-out;
          }
-         .quiz-options button:hover { background-color: #444; border-color: #777; }
-         .quiz-options button.selected { background-color: #A40000; border-color: #C80000; }
-         .quiz-options button.correct { background-color: #28a745; border-color: #34d058; color: white; }
-         .quiz-options button.incorrect { background-color: #dc3545; border-color: #e45665; color: white; }
-         .quiz-feedback { margin-top: 10px; font-size: 0.95em; padding: 8px; border-radius: 5px; text-align: left; }
-         .quiz-feedback.correct { background-color: rgba(40, 167, 69, 0.2); color: #a3d9b1; border: 1px solid rgba(40, 167, 69, 0.5); }
-         .quiz-feedback.incorrect { background-color: rgba(220, 53, 69, 0.2); color: #f1b0b7; border: 1px solid rgba(220, 53, 69, 0.5); }
-         .quiz-score { margin-top: 20px; font-size: 1.1em; font-weight: bold; text-align: center; }
+         .quiz-options button:hover { background-color: var(--button-secondary-hover-bg); border-color: var(--button-primary-hover-bg); }
+         .quiz-options button.selected { background-color: var(--button-primary-hover-bg); border-color: var(--button-primary-bg); color: #fff; }
+         .quiz-options button.correct { background-color: #28a745; border-color: #1e7e34; color: white; }
+         .quiz-options button.incorrect { background-color: #dc3545; border-color: #bd2130; color: white; }
+         .quiz-feedback { margin-top: 10px; font-size: 0.95em; padding: 8px; border-radius: 5px; text-align: left; transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;}
+         .quiz-feedback.correct { background-color: var(--quiz-feedback-correct-bg); color: var(--quiz-feedback-correct-text); border: 1px solid var(--quiz-feedback-correct-border); }
+         .quiz-feedback.incorrect { background-color: var(--quiz-feedback-incorrect-bg); color: var(--quiz-feedback-incorrect-text); border: 1px solid var(--quiz-feedback-incorrect-border); }
+         .quiz-score { margin-top: 20px; font-size: 1.1em; font-weight: bold; text-align: center; transition: color 0.3s ease-in-out;}
 
-         /* --- Total Quiz (Slide-Based) Styling --- */
         #biology-total-quiz-page .quiz-question-slide { display: none; text-align: left; }
         #biology-total-quiz-page .quiz-question-slide.active { display: block; }
         .total-quiz-navigation { display: flex; justify-content: space-between; margin-top: 25px; }
         .total-quiz-navigation .button { width: auto; padding: 10px 25px; }
-        .total-quiz-results { margin-top: 20px; font-size: 1.1em; font-weight: bold; text-align: left; }
+        .total-quiz-results { margin-top: 20px; font-size: 1.1em; font-weight: bold; text-align: left; transition: color 0.3s ease-in-out;}
         .total-quiz-results p { margin-bottom: 8px; font-size: 1em; font-weight: normal;}
         .total-quiz-results span.correct { color: #28a745; font-weight: bold; }
         .total-quiz-results span.incorrect { color: #dc3545; font-weight: bold; }
-        .total-quiz-results em { color: #a3d9b1; } /* Correct answer highlight */
-        .total-quiz-results hr { border: 0; height: 1px; background-color: #444; margin: 15px 0;} /* Style hr */
+        .total-quiz-results em { color: var(--quiz-feedback-correct-text); }
+        .total-quiz-results hr { border: 0; height: 1px; background-color: var(--border-color); margin: 15px 0; transition: background-color 0.3s ease-in-out;}
 
-        /* --- Footer --- */
-        .footer { margin-top: 30px; text-align: center; width: 100%; max-width: 900px; }
-        .disclaimer { font-size: 0.85em; color: #aaa; line-height: 1.5; }
+        .theme-toggle-container { position: fixed; z-index: 1000; }
+        .theme-toggle-container.desktop { top: 20px; right: 20px; }
+        .theme-toggle-container.mobile { bottom: 70px; left: 50%; transform: translateX(-50%); display: none; }
+        .theme-switch { position: relative; display: inline-block; width: 60px; height: 34px; }
+        .theme-switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--theme-toggle-bg); transition: .4s; border-radius: 34px;
+            border: 1px solid var(--button-primary-hover-bg);
+        }
+        .slider:before {
+            position: absolute;
+            content: ""; /* Emoji will be set by CSS based on theme */
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 3px;
+            background-color: var(--theme-toggle-slider);
+            transition: .4s;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px; /* Emoji size */
+            line-height: 26px; /* Center emoji vertically */
+            text-align: center;
+        }
+        input:checked + .slider { background-color: var(--theme-toggle-bg); }
+        input:checked + .slider:before { transform: translateX(26px); }
 
-        /* --- Responsive Adjustments --- */
+        html[data-theme='light'] .slider:before {
+            content: "☀️"; /* Sun emoji */
+            color: var(--theme-toggle-sun);
+        }
+        html[data-theme='dark'] .slider:before {
+            content: "🌙"; /* Moon emoji */
+            color: var(--theme-toggle-moon);
+        }
+
+        .footer {
+            padding-top: 20px; text-align: center; width: 100%; max-width: 900px;
+            margin-left: auto; margin-right: auto;
+            padding-bottom: 50px;
+        }
+        .disclaimer { font-size: 0.85em; color: var(--text-muted-color); line-height: 1.5; transition: color 0.3s ease-in-out;}
+
+        @media (max-width: 768px) {
+            .theme-toggle-container.desktop { display: none; }
+            .theme-toggle-container.mobile { display: block; }
+        }
         @media (max-width: 640px) {
             .container { padding: 25px 20px; }
             h1 { font-size: 1.7em; } h2 { font-size: 1.4em; } h3.collapsible-header { font-size: 1.15em; }
@@ -227,21 +357,27 @@
             .disclaimer { font-size: 0.8em; }
             .biology-topic-content p, .biology-topic-content li { font-size: 0.95em; }
             .quiz-options button { padding: 8px 12px; font-size: 0.95em;}
-            .biology-topic-grid { grid-template-columns: 1fr; } /* Stack buttons */
-            .content-table { font-size: 0.85em; } /* Smaller table text */
+            .biology-topic-grid { grid-template-columns: 1fr; }
+            .content-table { font-size: 0.85em; }
             .content-table th, .content-table td { padding: 8px; }
         }
     </style>
 </head>
 <body>
+    <div class="theme-toggle-container desktop">
+        <label class="theme-switch">
+            <input type="checkbox" id="theme-toggle-desktop">
+            <span class="slider"></span>
+        </label>
+    </div>
 
     <main>
         <div class="container">
 
             <div id="biology-main-page">
-                 <a href="kap5-bio.pdf" target="_blank" class="pdf-button">PDF Version (Main)</a>
+                 <a href="kap5-bio.pdf" target="_blank" class="-button">PDF Version (Main)</a>
                  <h1>Biology Resources</h1>
-                 <p class="instructions">Select a topic or try the summary quiz.</p>
+                 <p class="instructions">Select a topic to study, or try the summary quiz.</p>
 
                  <ul class="biology-topic-grid">
                      <li><button class="button" onclick="showBiologyTopic('topic-1-1')">1.1 Eukaryotic & Prokaryotic Cells</button></li>
@@ -258,15 +394,14 @@
                      <li><button class="button" onclick="showBiologyTopic('topic-1-12')">1.12 Importance of Enzymes</button></li>
                  </ul>
 
-                 <button class="button start-quiz-button" style="margin-top: 25px; background-color: #16a34a;" onclick="showTotalBiologyQuiz()">Total Biology Quiz</button>
+                 <button class="button total-quiz-main-btn quiz-disabled-initial" id="main-total-quiz-btn" onclick="showTotalBiologyQuiz()">Total Biology Quiz</button>
 
                  <a href="kap5-science.html" class="button back-button">Back to Science</a>
             </div>
 
             <div id="topic-1-1" class="biology-topic-content">
-                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <a href="GCSE Biology Revision Kit Cell Biology and Enzymes (Concise).pdf" target="_blank" class="pdf-button">PDF (1.1)</a>
                  <h2>1.1 Eukaryotic & Prokaryotic Cells</h2>
-
                  <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
                  <div class="collapsible-content revision-notes">
                      <p>Cells are the fundamental units of life, broadly categorised as Eukaryotic or Prokaryotic.</p>
@@ -312,31 +447,28 @@
                             <tr><td>Cell Wall</td><td>Absent</td><td>Present (Cellulose)</td><td>Present (Peptidoglycan)</td></tr>
                             <tr><td>Mitochondria</td><td>Present</td><td>Present</td><td>Absent</td></tr>
                             <tr><td>Chloroplasts</td><td>Absent</td><td>Present</td><td>Absent</td></tr>
-                            <tr><td>Ribosomes</td><td>Present (Larger)</td><td>Present (Larger)</td><td>Present (Smaller)</td></tr>
-                            <tr><td>Vacuole</td><td>Small/Absent</td><td>Large, central</td><td>Absent</td></tr>
-                            <tr><td>Flagella</td><td>Absent (except sperm)</td><td>Absent (most)</td><td>Sometimes Present</td></tr>
+                            <tr><td>Ribosomes</td><td>Present (Larger, 80S)</td><td>Present (Larger, 80S)</td><td>Present (Smaller, 70S)</td></tr>
+                            <tr><td>Vacuole</td><td>Small/Temporary (if present)</td><td>Large, central, permanent</td><td>Absent</td></tr>
+                            <tr><td>Flagella</td><td>Absent (except sperm)</td><td>Absent (in most higher plants)</td><td>Sometimes Present</td></tr>
                         </tbody>
                      </table>
                  </div>
-
                  <h3 class="collapsible-header" onclick="toggleCollapse(this)">Relevant Video</h3>
                  <div class="collapsible-content">
                      <div class="video-container">
                         <iframe src="https://www.youtube.com/embed/Pxujitlv8wc" title="Cells Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                      </div>
                  </div>
-
                  <h3 class="topic-quiz-header">Topic Quiz</h3>
                  <button class="button start-quiz-button" onclick="startTopicQuiz('topic-1-1', this)">Start Topic 1.1 Quiz</button>
                  <div class="quiz-container" id="quiz-topic-1-1">
                      <div class="quiz-score"></div>
                  </div>
-
                  <button class="button back-button" onclick="showBiologyMainPage()">Back to Biology Topics</button>
             </div>
 
             <div id="topic-1-2" class="biology-topic-content">
-                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <a href="GCSE Biology Revision Kit Cell Biology and Enzymes (Concise).pdf" target="_blank" class="pdf-button">PDF (1.2)</a>
                  <h2>1.2 Specialised Cells</h2>
                  <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
                  <div class="collapsible-content revision-notes">
@@ -401,7 +533,7 @@
             </div>
 
             <div id="topic-1-3" class="biology-topic-content">
-                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <a href="GCSE Biology Revision Kit Cell Biology and Enzymes (Concise).pdf" target="_blank" class="pdf-button">PDF (1.3)</a>
                  <h2>1.3 Microscopy Technology</h2>
                  <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
                  <div class="collapsible-content revision-notes">
@@ -455,7 +587,7 @@
             </div>
 
             <div id="topic-1-4" class="biology-topic-content">
-                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <a href="GCSE Biology Revision Kit Cell Biology and Enzymes (Concise).pdf" target="_blank" class="pdf-button">PDF (1.4)</a>
                  <h2>1.4 Number, Size, Scale & Estimation</h2>
                  <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
                  <div class="collapsible-content revision-notes">
@@ -495,7 +627,7 @@
             </div>
 
             <div id="topic-1-5" class="biology-topic-content">
-                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <a href="GCSE Biology Revision Kit Cell Biology and Enzymes (Concise).pdf" target="_blank" class="pdf-button">PDF (1.5)</a>
                  <h2>1.5 Quantitative Units & Standard Form</h2>
                  <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
                  <div class="collapsible-content revision-notes">
@@ -554,7 +686,7 @@
             </div>
 
              <div id="topic-1-6" class="biology-topic-content">
-                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <a href="GCSE Biology Revision Kit Cell Biology and Enzymes (Concise).pdf" target="_blank" class="pdf-button">PDF (1.6)</a>
                  <h2>1.6 Core Practical: Microscopy</h2>
                  <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
                  <div class="collapsible-content revision-notes">
@@ -615,7 +747,7 @@
             </div>
 
             <div id="topic-1-7" class="biology-topic-content">
-                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <a href="GCSE Biology Revision Kit Cell Biology and Enzymes (Concise).pdf" target="_blank" class="pdf-button">PDF (1.7)</a>
                  <h2>1.7 Enzyme Mechanism</h2>
                  <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
                  <div class="collapsible-content revision-notes">
@@ -655,7 +787,7 @@
             </div>
 
              <div id="topic-1-8" class="biology-topic-content">
-                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <a href="GCSE Biology Revision Kit Cell Biology and Enzymes (Concise).pdf" target="_blank" class="pdf-button">PDF (1.8)</a>
                  <h2>1.8 Enzyme Denaturation</h2>
                  <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
                  <div class="collapsible-content revision-notes">
@@ -685,7 +817,7 @@
             </div>
 
             <div id="topic-1-9" class="biology-topic-content">
-                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <a href="GCSE Biology Revision Kit Cell Biology and Enzymes (Concise).pdf" target="_blank" class="pdf-button">PDF (1.9)</a>
                  <h2>1.9 Factors Affecting Enzyme Activity</h2>
                  <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
                  <div class="collapsible-content revision-notes">
@@ -727,7 +859,7 @@
             </div>
 
             <div id="topic-1-10" class="biology-topic-content">
-                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <a href="GCSE Biology Revision Kit Cell Biology and Enzymes (Concise).pdf" target="_blank" class="pdf-button">PDF (1.10)</a>
                  <h2>1.10 Core Practical: Effect of pH on Amylase Activity</h2>
                  <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
                  <div class="collapsible-content revision-notes">
@@ -780,7 +912,7 @@
             </div>
 
              <div id="topic-1-11" class="biology-topic-content">
-                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <a href="GCSE Biology Revision Kit Cell Biology and Enzymes (Concise).pdf" target="_blank" class="pdf-button">PDF (1.11)</a>
                  <h2>1.11 Rate Calculations for Enzyme Activity</h2>
                  <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
                  <div class="collapsible-content revision-notes">
@@ -834,7 +966,7 @@
             </div>
 
             <div id="topic-1-12" class="biology-topic-content">
-                 <button class="pdf-button" onclick="alert('PDF download not yet implemented.')">PDF Version</button>
+                 <a href="GCSE Biology Revision Kit Cell Biology and Enzymes (Concise).pdf" target="_blank" class="pdf-button">PDF (1.12)</a>
                  <h2>1.12 Importance of Enzymes</h2>
                  <h3 class="collapsible-header" onclick="toggleCollapse(this)">Revision Notes</h3>
                  <div class="collapsible-content revision-notes">
@@ -907,6 +1039,13 @@
 
         </div> </main>
 
+    <div class="theme-toggle-container mobile">
+        <label class="theme-switch">
+            <input type="checkbox" id="theme-toggle-mobile">
+            <span class="slider"></span>
+        </label>
+    </div>
+
     <footer class="footer">
         <p class="disclaimer">
             Disclaimer: Information provided on this site is intended to be accurate as of May 2025. Updates are unlikely. Always verify critical information with official sources.
@@ -918,45 +1057,42 @@
         // ===== JAVASCRIPT FOR kap5-biology.html ONLY =====
         // ==================================================
 
-        // --- View Elements within Biology Page ---
+        let loadedBiologyQuizzes = null;
+        let currentTopicQuizSet = [];
+        let currentTotalQuizSet = [];
+        let quizDataLoadedSuccessfully = false; // Flag to track data loading
+
         const biologyViews = {
             biologyMainPage: document.getElementById('biology-main-page'),
             biologyTotalQuizPage: document.getElementById('biology-total-quiz-page'),
         };
         const biologyTopicContents = document.querySelectorAll('.biology-topic-content');
+        const mainTotalQuizBtn = document.getElementById('main-total-quiz-btn');
 
-        // Hides all biology-specific views
         function hideAllBiologyViews() {
             Object.values(biologyViews).forEach(view => { if(view) view.style.display = 'none'; });
             biologyTopicContents.forEach(view => view.style.display = 'none');
         }
 
-        // Shows the main Biology topic list page
         function showBiologyMainPage() {
             hideAllBiologyViews();
-
-            // --- START: Pause videos ---
             const topicDivs = document.querySelectorAll('.biology-topic-content');
             topicDivs.forEach(topicDiv => {
                 const iframes = topicDiv.querySelectorAll('iframe');
                 iframes.forEach(iframe => {
-                    if (iframe.src.includes('youtube.com') || iframe.src.includes('googleusercontent.com/youtube')) {
+                    if (iframe.src && (iframe.src.includes('youtube.com') || iframe.src.includes('googleusercontent.com/youtube'))) {
                         const currentSrc = iframe.src;
-                        iframe.src = ''; // Clear src first
-                        iframe.src = currentSrc; // Re-assign src to stop/reset
+                        iframe.src = '';
+                        iframe.src = currentSrc;
                     }
                 });
             });
-            // --- END: Pause videos ---
-
             if (biologyViews.biologyMainPage) {
                  biologyViews.biologyMainPage.style.display = 'block';
                  window.scrollTo(0, 0);
             }
         }
 
-
-        // Shows a specific Biology Topic content page
         function showBiologyTopic(topicId) {
             hideAllBiologyViews();
             const topicView = document.getElementById(topicId);
@@ -972,8 +1108,11 @@
             }
         }
 
-        // Shows the slide-based Total Biology Quiz page
         function showTotalBiologyQuiz() {
+            if (!quizDataLoadedSuccessfully || !loadedBiologyQuizzes) {
+                alert("Quiz data is still loading or has failed to load. Please wait or refresh the page.");
+                return;
+            }
             hideAllBiologyViews();
             if (biologyViews.biologyTotalQuizPage) {
                 biologyViews.biologyTotalQuizPage.style.display = 'block';
@@ -985,7 +1124,6 @@
             }
         }
 
-        // --- Collapsible Section Logic ---
         function toggleCollapse(headerElement) {
             const contentElement = headerElement.nextElementSibling;
             if (contentElement && contentElement.classList.contains('collapsible-content')) {
@@ -996,120 +1134,61 @@
             }
         }
 
-        // =====================================
-        // ========= QUIZ DATA STORE ===========
-        // =====================================
-        const biologyQuizzes = {
-            'topic-1-1': [ /* Eukaryotic/Prokaryotic */
-                { q: "Which structure controls entry and exit of substances in both animal and bacterial cells?", options: ["Nucleus", "Cell Wall", "Cell Membrane", "Ribosome"], correct: 2 },
-                { q: "Plasmids, small rings of DNA carrying extra genes, are typically found in:", options: ["Plant cells", "Animal cells", "All eukaryotic cells", "Bacterial cells"], correct: 3 },
-                { q: "Which organelle is the site of photosynthesis in plant cells?", options: ["Mitochondrion", "Chloroplast", "Ribosome", "Vacuole"], correct: 1 },
-                { q: "The cell wall of a plant cell is primarily made of:", options: ["Peptidoglycan", "Chitin", "Cellulose", "Protein"], correct: 2 }
-            ],
-            'topic-1-2': [ /* Specialised Cells */
-                { q: "Energy for sperm movement is primarily generated by:", options: ["Acrosome", "Nucleus", "Mitochondria", "Cytoplasm"], correct: 2 },
-                { q: "What prevents multiple sperm fertilising an egg?", options: ["Tail falling off", "Nutrient depletion", "Membrane changes after fertilisation", "Acrosome reaction"], correct: 2 },
-                { q: "Where are ciliated epithelial cells commonly found, playing a role in moving mucus?", options: ["Muscle tissue", "Lining the airways", "In the blood", "Covering the egg cell"], correct: 1 },
-                { q: "What term describes a nucleus containing only one set of chromosomes?", options: ["Diploid", "Polyploid", "Haploid", "Aploid"], correct: 2 }
-            ],
-            'topic-1-3': [ /* Microscopy */
-                { q: "Which microscope uses glass lenses and visible light?", options: ["Electron Microscope", "Light Microscope", "Scanning Probe Microscope", "X-ray Microscope"], correct: 1 },
-                { q: "What is the main advantage of electron microscopes regarding image detail?", options: ["Ability to view living cells", "Lower cost", "Much higher resolution", "Production of colour images"], correct: 2 },
-                { q: "A key limitation of electron microscopy is that:", options: ["It has low magnification", "Specimens must be dead and in a vacuum", "It uses visible light", "Images are always in colour"], correct: 1 },
-                { q: "The detailed structure of ribosomes within a cell was clearly visualized using:", options: ["The naked eye", "A hand lens", "A light microscope", "An electron microscope"], correct: 3 }
-            ],
-            'topic-1-4': [ /* Size, Scale, Estimation */
-                { q: "If a cell measures 50 $\mu m$ in diameter, what is this measurement in millimetres (mm)?", options: ["0.5 mm", "0.05 mm", "5 mm", "0.005 mm"], correct: 1 },
-                { q: "Estimation in microscopy is particularly useful for:", options: ["Getting exact measurements for publication", "Quickly checking if a calculation is reasonable or approximating difficult measures", "Staining cells accurately", "Focusing the image perfectly"], correct: 1 },
-                { q: "A scale bar on a diagram represents 10 $\mu m$ and measures 20 mm long on the paper. What is the magnification of the diagram?", options: ["$\\times 2$", "$\\times 200$", "$\\times 2000$", "$\\times 0.5$"], correct: 2 },
-                { q: "Why might a biologist estimate the size of mitochondria seen in an image?", options: ["They are too large to measure", "Their boundaries might be unclear or they want a quick check", "The microscope's light isn't working", "The stain makes them invisible"], correct: 1 }
-            ],
-            'topic-1-5': [ /* Units, Standard Form */
-                { q: "Which prefix represents one-billionth ($10^{-9}$)?", options: ["milli (m)", "micro ($\\mu$)", "pico (p)", "nano (n)"], correct: 3 },
-                { q: "Convert 3 micrometres ($\mu m$) into nanometres (nm).", options: ["0.003 nm", "300 nm", "3000 nm", "0.3 nm"], correct: 2 },
-                { q: "Express the number 0.0075 in standard form.", options: ["$7.5 \\times 10^3$", "$7.5 \\times 10^{-2}$", "$7.5 \\times 10^{-3}$", "$0.75 \\times 10^{-2}$"], correct: 2 },
-                { q: "Calculate $(5 \\times 10^4) \\div (2 \\times 10^{-2})$ and express the answer in standard form.", options: ["$2.5 \\times 10^6$", "$2.5 \\times 10^2$", "$3 \\times 10^6$", "$2.5 \\times 10^{-8}$"], correct: 0 }
-            ],
-            'topic-1-6': [ /* Core Practical: Microscopy */
-                { q: "When preparing a wet mount, why is the coverslip lowered gently at an angle?", options: ["To ensure the stain spreads evenly", "To prevent trapping air bubbles", "To flatten the specimen", "To stick the coverslip down"], correct: 1 },
-                { q: "Which part of the microscope is used for initial focusing at low power?", options: ["Fine focus knob", "Objective lens", "Coarse focus knob", "Eyepiece lens"], correct: 2 },
-                { q: "A student uses a $\\times 10$ eyepiece and a $\\times 20$ objective lens. What is the total magnification?", options: ["$\\times 10$", "$\\times 20$", "$\\times 30$", "$\\times 200$"], correct: 3 },
-                { q: "Which of the following is a rule for producing good scientific drawings?", options: ["Use shading for realism", "Use a blue pen for labels", "Draw label lines with a ruler pointing accurately", "Make the drawing as small as possible"], correct: 2 }
-            ],
-             'topic-1-7': [ /* Enzyme Mechanism */
-                 { q: "The region on an enzyme where the substrate binds is called the:", options: ["Catalytic converter", "Active site", "Binding pocket", "Substrate region"], correct: 1 },
-                 { q: "The 'Induced Fit' model proposes that the enzyme's active site:", options: ["Has a rigid shape matching the substrate", "Changes shape slightly upon substrate binding", "Is destroyed by the substrate", "Works only once"], correct: 1 },
-                 { q: "Enzyme specificity is due to the complementary shapes of the:", options: ["Enzyme and product", "Substrate and product", "Active site and substrate", "Nucleus and cytoplasm"], correct: 2 },
-                 { q: "What is formed temporarily when an enzyme binds to its substrate?", options: ["Denatured enzyme", "Product complex", "Enzyme-substrate complex", "Activated substrate"], correct: 2 }
-             ],
-            'topic-1-8': [ /* Denaturation */
-                { q: "What happens to an enzyme during denaturation?", options: ["It speeds up the reaction", "Its 3D shape, especially the active site, is irreversibly changed", "It binds more substrate", "It requires less energy"], correct: 1 },
-                { q: "Which factor is LEAST likely to cause enzyme denaturation?", options: ["Very high temperature", "Very low pH", "Optimal temperature", "Very high pH"], correct: 2 },
-                { q: "Denaturation prevents the enzyme from functioning because:", options: ["The substrate changes shape", "The active site shape changes and the substrate cannot bind", "The products inhibit the enzyme", "There is not enough energy"], correct: 1 },
-                { q: "The bonds primarily broken during heat denaturation are:", options: ["Strong peptide bonds", "Weak hydrogen and ionic bonds", "Strong covalent bonds", "Glycosidic bonds"], correct: 1 }
-            ],
-            'topic-1-9': [ /* Factors Affecting Enzymes */
-                { q: "Increasing substrate concentration generally increases reaction rate until:", options: ["The temperature drops", "The pH changes", "The enzyme denatures", "All active sites become saturated"], correct: 3 },
-                { q: "The temperature at which an enzyme exhibits maximum activity is called its:", options: ["Denaturation point", "Activation energy", "Optimum temperature", "Saturation point"], correct: 2 },
-                { q: "A change in pH away from the optimum affects enzyme activity primarily by altering:", options: ["Substrate concentration", "The enzyme's 3D structure and active site shape", "Kinetic energy", "Product concentration"], correct: 1 },
-                { q: "At very low temperatures, enzyme activity is low because:", options: ["The enzyme is denatured", "There is low kinetic energy and fewer collisions", "The pH is too low", "The substrate concentration is too high"], correct: 1 }
-            ],
-            'topic-1-10': [ /* Core Practical: pH */
-                { q: "In the amylase practical, buffer solutions are used to:", options: ["Provide starch", "Control the pH", "Keep the temperature constant", "Stain the enzyme"], correct: 1 },
-                { q: "The disappearance of starch is detected using:", options: ["Amylase solution", "Benedict's solution", "Iodine solution", "Buffer solution"], correct: 2 },
-                { q: "If the time taken for starch to disappear is 20 seconds, the calculated rate (as $1/Time$) is:", options: ["20 $s^{-1}$", "0.5 $s^{-1}$", "0.05 $s^{-1}$", "5 $s^{-1}$"], correct: 2 },
-                { q: "Which of these is a crucial variable to control using a water bath in this experiment?", options: ["pH", "Iodine concentration", "Temperature", "Time"], correct: 2 }
-            ],
-            'topic-1-11': [ /* Rate Calculations */
-                { q: "An enzyme produces 45g of product in 15 minutes. What is the rate in g/min?", options: ["0.33 g/min", "3 g/min", "15 g/min", "45 g/min"], correct: 1 },
-                { q: "In an enzyme experiment, the reaction endpoint was reached after 25 seconds. Calculate the rate in $s^{-1}$.", options: ["25 $s^{-1}$", "0.4 $s^{-1}$", "0.04 $s^{-1}$", "4 $s^{-1}$"], correct: 2 },
-                { q: "On a graph showing product concentration vs. time, the initial rate is represented by:", options: ["The height of the plateau", "The gradient of the tangent at t=0", "The time taken to finish", "The area under the graph"], correct: 1 },
-                { q: "If $Rate = \\frac{\\text{Change in Quantity}}{\\text{Time}}$, suitable units could be:", options: ["seconds", "$s^{-1}$", "g/min", "pH units"], correct: 2 }
-            ],
-             'topic-1-12': [ /* Importance of Enzymes */
-                { q: "Which type of enzyme is primarily involved in breaking down lipids?", options: ["Protease", "Carbohydrase", "Lipase", "Amylase"], correct: 2 },
-                { q: "The synthesis of large molecules like glycogen from smaller units like glucose is an example of:", options: ["Catabolism", "Denaturation", "Anabolism", "Digestion"], correct: 2 },
-                { q: "Proteases break down proteins into their building blocks, which are:", options: ["Fatty acids", "Simple sugars", "Glycerol", "Amino acids"], correct: 3 },
-                { q: "Why are enzymes crucial for digestion?", options: ["They provide energy", "They break down large, insoluble food molecules into small, soluble ones", "They build new tissues", "They transport nutrients"], correct: 1 }
-            ],
+        async function fetchQuizData() {
+            try {
+                const response = await fetch('biology_quizzes.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status} while fetching biology_quizzes.json`);
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error("Error fetching quiz data:", error);
+                const container = document.querySelector('.container');
+                if (container) {
+                    let currentVisibleView = document.getElementById('biology-main-page');
+                    const errorMsgElement = document.createElement('p');
+                    errorMsgElement.style.color = 'red';
+                    errorMsgElement.style.textAlign = 'center';
+                    errorMsgElement.style.padding = '20px';
+                    errorMsgElement.textContent = 'Error: Could not load quiz questions. Please ensure "biology_quizzes.json" is in the correct folder and try refreshing the page.';
+                    currentVisibleView.insertAdjacentElement('afterbegin', errorMsgElement);
+                }
+                return null;
+            }
+        }
 
-            // Total Biology Quiz Data
-            'total-biology': [
-                 { q: "Which organelle, present in plant cells but not animal cells, performs photosynthesis?", options: ["Nucleus", "Mitochondrion", "Ribosome", "Chloroplast"], correct: 3 },
-                 { q: "Bacterial cells differ from eukaryotic cells because they lack:", options: ["Ribosomes", "A cell membrane", "A true nucleus", "Cytoplasm"], correct: 2 },
-                 { q: "The acrosome is an adaptation found in which specialised cell?", options: ["Egg cell", "Sperm cell", "Ciliated epithelial cell", "Red blood cell"], correct: 1 },
-                 { q: "Which statement best describes the advantage of electron microscopes?", options: ["They are cheap and portable", "They allow viewing of living cells in colour", "They offer much higher resolution for viewing ultrastructure", "They use simple glass lenses"], correct: 2 },
-                 { q: "Convert 500 micrometres ($\mu m$) to millimetres (mm).", options: ["5 mm", "0.5 mm", "50 mm", "0.05 mm"], correct: 1 },
-                 { q: "If total magnification is $\\times 400$ and the eyepiece lens is $\\times 10$, what is the objective lens magnification?", options: ["$\\times 4$", "$\\times 40$", "$\\times 390$", "$\\times 4000$"], correct: 1 },
-                 { q: "The 'Induced Fit' model describes the interaction between:", options: ["Nucleus and cytoplasm", "Enzyme active site and substrate", "Mitochondria and ATP", "Cell wall and cell membrane"], correct: 1 },
-                 { q: "High temperatures cause enzymes to lose function primarily by:", options: ["Increasing substrate concentration", "Breaking weak bonds and changing active site shape", "Decreasing kinetic energy", "Removing products"], correct: 1 },
-                 { q: "What is the typical shape of a graph plotting enzyme reaction rate against pH?", options: ["Straight line increasing", "Straight line decreasing", "S-shaped curve", "Bell-shaped curve"], correct: 3 },
-                 { q: "In the amylase-starch practical, what indicates that the reaction is complete?", options: ["The mixture turns blue-black", "The iodine solution remains orange-brown", "Bubbles stop forming", "The temperature increases"], correct: 1 },
-                 { q: "If an enzyme reaction takes 2 minutes (120 seconds) to complete, what is the rate in $s^{-1}$?", options: ["0.5 $s^{-1}$", "2 $s^{-1}$", "0.0083 $s^{-1}$", "120 $s^{-1}$"], correct: 2 },
-                 { q: "Lipase is an enzyme that breaks down:", options: ["Proteins", "Starch", "Lipids", "Cellulose"], correct: 2 },
-                 { q: "Which process involves enzymes building larger molecules from smaller ones?", options: ["Digestion", "Catabolism", "Denaturation", "Synthesis (Anabolism)"], correct: 3 },
-                 { q: "What provides the energy for the movement of cilia and flagella?", options: ["Nucleus", "Ribosomes", "Mitochondria", "Vacuole"], correct: 2 },
-                 { q: "Which unit is smallest?", options: ["millimetre (mm)", "micrometre ($\\mu m$)", "picometre (pm)", "nanometre (nm)"], correct: 2 }
-            ]
-        };
-
-        // =====================================
-        // ========= TOPIC QUIZ LOGIC ==========
-        // =====================================
         let topicUserAnswers = {};
+        const TARGET_TOPIC_QUESTIONS = 4;
 
         function startTopicQuiz(topicId, startButtonElement) {
+            if (!quizDataLoadedSuccessfully || !loadedBiologyQuizzes) {
+                alert("Quiz data is still loading or has failed to load. Please try again shortly or refresh the page.");
+                return;
+            }
             const quizContainer = document.getElementById(`quiz-${topicId}`);
-            const quizData = biologyQuizzes[topicId];
-            if (!quizData || !quizContainer) return;
-            startButtonElement.style.display = 'none';
+            const allTopicQuestions = loadedBiologyQuizzes[topicId] || [];
+
+            if (allTopicQuestions.length === 0 || !quizContainer) {
+                quizContainer.innerHTML = "<p>No questions available for this topic.</p><div class='quiz-score'></div>";
+                if(startButtonElement) startButtonElement.style.display = 'block';
+                return;
+            }
+            const shuffled = [...allTopicQuestions].sort(() => 0.5 - Math.random());
+            currentTopicQuizSet = shuffled.slice(0, Math.min(shuffled.length, TARGET_TOPIC_QUESTIONS));
+            if (currentTopicQuizSet.length === 0) {
+                quizContainer.innerHTML = "<p>Not enough questions to start the quiz for this topic.</p><div class='quiz-score'></div>";
+                 if(startButtonElement) startButtonElement.style.display = 'block';
+                return;
+            }
+            if(startButtonElement) startButtonElement.style.display = 'none';
             const scoreDiv = quizContainer.querySelector('.quiz-score');
             quizContainer.innerHTML = '';
             quizContainer.appendChild(scoreDiv);
             scoreDiv.innerHTML = '';
             topicUserAnswers = {};
             let quizHTML = '';
-            quizData.forEach((q, index) => {
+            currentTopicQuizSet.forEach((q, index) => {
                 quizHTML += `<div class="quiz-question">${index + 1}. ${q.q}</div>`;
                 quizHTML += `<div class="quiz-options" data-topic="${topicId}" data-question="${index}">`;
                 q.options.forEach((option, optionIndex) => {
@@ -1119,7 +1198,7 @@
             });
             quizHTML += `<button class="button" style="margin-top: 20px;" onclick="submitTopicQuiz('${topicId}')">Submit Quiz</button>`;
             scoreDiv.insertAdjacentHTML('beforebegin', quizHTML);
-            MathJax.typesetPromise([quizContainer]); // **ADDED: Typeset new quiz content**
+            MathJax.typesetPromise([quizContainer]);
         }
 
         function resetTopicQuiz(topicId) {
@@ -1144,10 +1223,9 @@
         }
 
         function submitTopicQuiz(topicId) {
-            const quizData = biologyQuizzes[topicId];
-            if (!quizData) return;
+            if (!currentTopicQuizSet || currentTopicQuizSet.length === 0) return;
             let score = 0;
-            quizData.forEach((q, index) => {
+            currentTopicQuizSet.forEach((q, index) => {
                 const feedbackElement = document.getElementById(`feedback-${topicId}-${index}`);
                 const selectedOptionIndex = topicUserAnswers[`${topicId}_${index}`];
                 const optionsContainer = document.querySelector(`#quiz-${topicId} .quiz-options[data-question="${index}"]`);
@@ -1175,18 +1253,15 @@
                 }
             });
             const scoreElement = document.querySelector(`#quiz-${topicId} .quiz-score`);
-            if (scoreElement) scoreElement.textContent = `Your Score: ${score} / ${quizData.length}`;
+            if (scoreElement) scoreElement.textContent = `Your Score: ${score} / ${currentTopicQuizSet.length}`;
             const submitButton = document.querySelector(`#quiz-${topicId} button[onclick^="submitTopicQuiz"]`);
             if (submitButton) submitButton.disabled = true;
-            MathJax.typesetPromise([scoreElement.parentElement]); // **ADDED: Typeset feedback**
+            MathJax.typesetPromise([scoreElement.parentElement]);
         }
 
-        // =====================================
-        // ===== TOTAL QUIZ (SLIDE) LOGIC ======
-        // =====================================
-        let totalQuizAnswers = {};
+        let totalQuizUserAnswers = {};
         let currentTotalQuizQuestionIndex = 0;
-        const totalQuizData = biologyQuizzes['total-biology'] || [];
+        const TARGET_TOTAL_QUESTIONS = 15;
 
         const totalQuizContainer = document.getElementById('quiz-total-biology');
         const totalQuizResultsContainer = document.getElementById('total-quiz-results-container');
@@ -1198,43 +1273,59 @@
         const totalQuizBackToTopicsBtn = document.getElementById('total-quiz-back-to-topics');
 
         function initializeTotalBiologyQuiz() {
+            if (!loadedBiologyQuizzes) {
+                alert("Quiz data is not loaded yet. Please wait or refresh.");
+                return;
+            }
+            const allTotalQuestions = loadedBiologyQuizzes['total-biology'] || [];
+            if (allTotalQuestions.length === 0) {
+                if(totalQuizContainer) totalQuizContainer.innerHTML = "<p>No questions available for the total quiz.</p>";
+                if(totalQuizNav) totalQuizNav.style.display = 'none';
+                return;
+            }
+            const shuffled = [...allTotalQuestions].sort(() => 0.5 - Math.random());
+            currentTotalQuizSet = shuffled.slice(0, Math.min(shuffled.length, TARGET_TOTAL_QUESTIONS));
+            if (currentTotalQuizSet.length === 0) {
+                 if(totalQuizContainer) totalQuizContainer.innerHTML = "<p>Not enough questions to start the total quiz.</p>";
+                 if(totalQuizNav) totalQuizNav.style.display = 'none';
+                 return;
+            }
             currentTotalQuizQuestionIndex = 0;
-            totalQuizAnswers = {};
+            totalQuizUserAnswers = {};
             if(totalQuizResultsContainer) totalQuizResultsContainer.innerHTML = '';
             if(totalQuizInstructions) totalQuizInstructions.style.display = 'block';
             if(totalQuizNav) totalQuizNav.style.display = 'flex';
             if(totalQuizContainer) totalQuizContainer.innerHTML = '';
             if(totalQuizBackToTopicsBtn) totalQuizBackToTopicsBtn.style.display = 'block';
-
             loadTotalQuizQuestion(currentTotalQuizQuestionIndex);
             updateTotalQuizNavButtons();
         }
 
         function loadTotalQuizQuestion(index) {
-            if (!totalQuizContainer || index < 0 || index >= totalQuizData.length) return;
-            const q = totalQuizData[index];
+            if (!totalQuizContainer || index < 0 || index >= currentTotalQuizSet.length) return;
+            const q = currentTotalQuizSet[index];
             let quizHTML = `<div class="quiz-question-slide active" data-question-index="${index}">`;
-            quizHTML += `<div class="quiz-question">(${index + 1}/${totalQuizData.length}) ${q.q}</div>`;
+            quizHTML += `<div class="quiz-question">(${index + 1}/${currentTotalQuizSet.length}) ${q.q}</div>`;
             quizHTML += `<div class="quiz-options" data-topic="total-biology" data-question="${index}">`;
             q.options.forEach((option, optionIndex) => {
-                const isSelected = totalQuizAnswers[index] === optionIndex;
+                const isSelected = totalQuizUserAnswers[index] === optionIndex;
                 quizHTML += `<button class="${isSelected ? 'selected' : ''}" onclick="selectTotalQuizAnswer(this, ${index}, ${optionIndex})">${option}</button>`;
             });
             quizHTML += `</div></div>`;
             totalQuizContainer.innerHTML = quizHTML;
-            MathJax.typesetPromise([totalQuizContainer]); // **ADDED: Typeset total quiz question**
+            MathJax.typesetPromise([totalQuizContainer]);
         }
 
         function selectTotalQuizAnswer(buttonElement, questionIndex, optionIndex) {
             const optionsContainer = buttonElement.parentElement;
             optionsContainer.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
             buttonElement.classList.add('selected');
-            totalQuizAnswers[questionIndex] = optionIndex;
+            totalQuizUserAnswers[questionIndex] = optionIndex;
         }
 
         function navigateTotalQuiz(direction) {
             const newIndex = currentTotalQuizQuestionIndex + direction;
-            if (newIndex >= 0 && newIndex < totalQuizData.length) {
+            if (newIndex >= 0 && newIndex < currentTotalQuizSet.length) {
                 currentTotalQuizQuestionIndex = newIndex;
                 loadTotalQuizQuestion(currentTotalQuizQuestionIndex);
                 updateTotalQuizNavButtons();
@@ -1244,15 +1335,15 @@
         function updateTotalQuizNavButtons() {
             if (!totalQuizPrevBtn || !totalQuizNextBtn || !totalQuizFinishBtn) return;
             totalQuizPrevBtn.style.visibility = (currentTotalQuizQuestionIndex === 0) ? 'hidden' : 'visible';
-            totalQuizNextBtn.style.display = (currentTotalQuizQuestionIndex === totalQuizData.length - 1) ? 'none' : 'inline-block';
-            totalQuizFinishBtn.style.display = (currentTotalQuizQuestionIndex === totalQuizData.length - 1) ? 'inline-block' : 'none';
+            totalQuizNextBtn.style.display = (currentTotalQuizQuestionIndex === currentTotalQuizSet.length - 1) ? 'none' : 'inline-block';
+            totalQuizFinishBtn.style.display = (currentTotalQuizQuestionIndex === currentTotalQuizSet.length - 1) ? 'inline-block' : 'none';
         }
 
         function submitTotalBiologyQuiz() {
             let score = 0;
             let resultsHTML = '<h2>Quiz Results:</h2>';
-            totalQuizData.forEach((q, index) => {
-                 const selectedOptionIndex = totalQuizAnswers[index];
+            currentTotalQuizSet.forEach((q, index) => {
+                 const selectedOptionIndex = totalQuizUserAnswers[index];
                  const isCorrect = selectedOptionIndex === q.correct;
                  if (isCorrect) score++;
                  resultsHTML += `<p><strong>Q${index + 1}: ${q.q}</strong><br/>`;
@@ -1265,20 +1356,73 @@
                  if (!isCorrect) resultsHTML += `<br/><em>Correct answer: ${q.options[q.correct]}</em>`;
                  resultsHTML += `</p><hr>`;
             });
-            resultsHTML = `<h2>Final Score: ${score} / ${totalQuizData.length}</h2><br/>` + resultsHTML;
+            resultsHTML = `<h2>Final Score: ${score} / ${currentTotalQuizSet.length}</h2><br/>` + resultsHTML;
             if(totalQuizContainer) totalQuizContainer.innerHTML = '';
             if(totalQuizNav) totalQuizNav.style.display = 'none';
             if(totalQuizInstructions) totalQuizInstructions.style.display = 'none';
             if(totalQuizResultsContainer) {
                 totalQuizResultsContainer.innerHTML = resultsHTML;
-                MathJax.typesetPromise([totalQuizResultsContainer]); // **ADDED: Typeset results**
+                MathJax.typesetPromise([totalQuizResultsContainer]);
             }
             if(totalQuizBackToTopicsBtn) totalQuizBackToTopicsBtn.style.display = 'block';
         }
 
-        // --- Initial Page Load ---
-        document.addEventListener('DOMContentLoaded', () => {
-            showBiologyMainPage(); // Show the main biology page by default
+        const themeToggleDesktop = document.getElementById('theme-toggle-desktop');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+        const currentTheme = localStorage.getItem('theme');
+
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                if(themeToggleDesktop) themeToggleDesktop.checked = true;
+                if(themeToggleMobile) themeToggleMobile.checked = true;
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                if(themeToggleDesktop) themeToggleDesktop.checked = false;
+                if(themeToggleMobile) themeToggleMobile.checked = false;
+            }
+        }
+
+        if (currentTheme) {
+            applyTheme(currentTheme);
+        } else {
+            applyTheme('dark');
+        }
+
+        function switchTheme(e) {
+            const newTheme = e.target.checked ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+            if (e.target.id === 'theme-toggle-desktop' && themeToggleMobile) {
+                themeToggleMobile.checked = e.target.checked;
+            } else if (e.target.id === 'theme-toggle-mobile' && themeToggleDesktop) {
+                themeToggleDesktop.checked = e.target.checked;
+            }
+        }
+
+        if(themeToggleDesktop) themeToggleDesktop.addEventListener('change', switchTheme);
+        if(themeToggleMobile) themeToggleMobile.addEventListener('change', switchTheme);
+
+        // --- INITIAL PAGE LOAD & DATA FETCH ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            applyTheme(savedTheme);
+            showBiologyMainPage();
+            if (mainTotalQuizBtn) {
+                mainTotalQuizBtn.classList.add('quiz-disabled-initial');
+            }
+            const quizData = await fetchQuizData();
+            if (quizData) {
+                loadedBiologyQuizzes = quizData;
+                quizDataLoadedSuccessfully = true;
+                console.log("Biology quiz data loaded successfully.");
+                if (mainTotalQuizBtn) {
+                    mainTotalQuizBtn.classList.remove('quiz-disabled-initial');
+                }
+            } else {
+                quizDataLoadedSuccessfully = false;
+                console.error("Failed to load biology quiz data. Quiz functionality will be limited.");
+            }
         });
     </script>
 
